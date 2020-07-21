@@ -127,7 +127,7 @@ let undraw = function () {
 }
 
 
-
+let over = false;
 
 let freeze = function () {
 
@@ -147,8 +147,13 @@ let freeze = function () {
 		displayNextTetromino();
 		addScore();
 		currentPosition = 4;
-		gameOver();
 		draw();
+		gameOver();
+
+		// if (!over) {
+		// 	draw();
+		// 	console.log("not over");
+		// }
 		// console.log(currentPosition + "c");
 	}
 }
@@ -156,11 +161,15 @@ let freeze = function () {
 
 
 let moveDown = function () {
-	undraw();
-	currentPosition += width;
-	// console.log(currentPosition);
-	draw();
-	freeze();
+	console.log(over);
+
+	if(!over) {
+		undraw();
+		currentPosition += width;
+		// console.log(currentPosition);
+		draw();
+		freeze();
+	}
 }
 
 let moveLeft = function () {
@@ -313,6 +322,7 @@ let gameOver = function () {
 		// scoreDisplay.textContent = "";
 		console.log("gameOver");
 		clearInterval(timer);
+		over = true;
 	}
 
 }
@@ -325,17 +335,20 @@ let gameOver = function () {
 
 let controls = function (event) {
 
-	if (event.keyCode === 37) {
-		moveLeft();
+	if (!over) {
 
-	} else if (event.keyCode === 38) {
-		rotate();
+		if (event.keyCode === 37) {
+			moveLeft();
 
-	} else if (event.keyCode === 39) {
-		moveRight();
+		} else if (event.keyCode === 38) {
+			rotate();
 
-	} else if (event.keyCode === 40) {
-		moveDown();
+		} else if (event.keyCode === 39) {
+			moveRight();
+
+		} else if (event.keyCode === 40) {
+			moveDown();
+		}
 	}
 }
 
