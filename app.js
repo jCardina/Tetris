@@ -6,6 +6,14 @@ let score = 0;
 const startBtn = document.getElementById("start_button");
 let nextRandom = 0;
 
+const colors = [
+'orange',
+'red',
+'purple',
+'green',
+'blue'
+];
+
 
 let createBoard = function () {
 
@@ -105,6 +113,7 @@ let currentTetromino = tetrominoes[random][0];
 let draw = function () {
 	currentTetromino.forEach(index => {
 		squares[currentPosition + index].classList.add("tetromino");
+		squares[currentPosition + index].style.backgroundColor = colors[random];
 	});
 }
 
@@ -113,6 +122,7 @@ let draw = function () {
 let undraw = function () {
 	currentTetromino.forEach(index => {
 		squares[currentPosition + index].classList.remove("tetromino");
+		squares[currentPosition + index].style.backgroundColor = "transparent";
 	});
 }
 
@@ -137,8 +147,8 @@ let freeze = function () {
 		displayNextTetromino();
 		addScore();
 		currentPosition = 4;
-		draw();
 		gameOver();
+		draw();
 		// console.log(currentPosition + "c");
 	}
 }
@@ -224,10 +234,12 @@ let displayNextTetromino = function () {
 
 	displaySquares.forEach(square => {
 		square.classList.remove("tetromino");
+		square.style.backgroundColor = "transparent";
 	});
 
 	nextTetromino[nextRandom].forEach(index => {
 		displaySquares[displayIndex + index].classList.add("tetromino");
+		displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandom];
 
 	});
 }
@@ -247,6 +259,7 @@ let addScore = function () {
 			scoreDisplay.textContent = score;
 			row.forEach(index => {
 				squares[index].classList.remove("taken", "tetromino");
+				squares[index].style.backgroundColor = "transparent";
 			});
 
 			const squaresRemoved = squares.splice(i, width);
@@ -274,11 +287,33 @@ let gameOver = function () {
 
 	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
 
+	// let isFirstRow = function () {
+
+	// 	let firstRow = false;
+
+	// 	for (i = 0; i < 10; i++) {
+	// 		if(squares[i].classList.contains("taken")) {
+	// 			firstRow = true;
+	// 			break;
+	// 		}
+	// 	}
+
+	// 	return firstRow;
+	// }
+
+	// let row = isFirstRow();
+
+	// let isFirstRow = currentTetromino.some(index => console.log(index));
+		// currentPosition < 10);
+	// console.log(row);
+	// console.log(currentPosition + index - width);
+
 	if (isPositionTaken) {
 		// scoreDisplay.textContent = "";
 		console.log("gameOver");
 		clearInterval(timer);
 	}
+
 }
 
 //arreglar rotacion de preview y que cambia de ficha
