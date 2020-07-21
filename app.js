@@ -320,6 +320,9 @@ let gameOver = function () {
 		// currentPosition < 10);
 	// console.log(row);
 	// console.log(currentPosition + index - width);
+	if (isFirstRow) {
+		draw();
+	}
 
 	if (isPositionTaken || isFirstRow) {
 		// scoreDisplay.textContent = "";
