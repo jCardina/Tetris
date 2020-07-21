@@ -245,7 +245,8 @@ let controls = function (event) {
 	}
 }
 
-
+// moveDown();
+draw();
 let timer = setInterval(moveDown, 1000);
 document.addEventListener('keyup', controls);
 
