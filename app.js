@@ -127,7 +127,7 @@ let undraw = function () {
 }
 
 
-let over = false;
+let over = true;
 
 let freeze = function () {
 
@@ -358,7 +358,7 @@ let controls = function (event) {
 	}
 }
 
-
+let started = false;
 
 document.addEventListener('keyup', controls);
 
@@ -368,13 +368,20 @@ startBtn.addEventListener('click', () => {
 	if (timer) {
 		clearInterval(timer);
 		timer = null;
+		over = true;
 	} else {
+		over = false;
 		draw();
 		timer = setInterval(moveDown, 1000);
-		nextRandom = Math.floor(Math.random() * tetrominoes.length);
-		displayNextTetromino();
-		//que no se puedan mover las fichas en pausa
+
+		if (!started) {
+			nextRandom = Math.floor(Math.random() * tetrominoes.length);
+			displayNextTetromino();
+			started = true;
+		}
 	}
 });
+
+
 
 
