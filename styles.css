@@ -3,13 +3,16 @@
 	flex-flow: row wrap;
 	width: 300px;
 	height: 600px;
-	background-color: grey;
-	border: 5px solid black;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 5px solid rgba(255, 255, 255, 0.6);
+	border-radius: 4px;
 	margin: auto;
 }
 
 .tetromino {
 	/*background-color: blue;*/
+	box-shadow: inset -2px -2px 0 0 rgba(171, 178, 179,0.4), inset 2px 2px 0 0 rgba(255, 255, 255, 0.5);
+	border-radius: 4px;
 }
 
 .mini-grid {
@@ -17,5 +20,18 @@
 	width: 120px;
 	display: flex;
 	flex-flow: row wrap;
-	background-color: grey;
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 5px solid rgba(255, 255, 255, 0.6);
+	border-radius: 4px;
+	
+}
+
+body {
+	background: rgb(174,225,238);
+	background: radial-gradient(circle, rgba(174,225,238,1) 0%, rgba(148,187,233,1) 100%);
+
+	/*background: rgb(174,238,214);
+	background: radial-gradient(circle, rgba(174,238,214,1) 0%, rgba(148,187,233,1) 100%);*/
+	/*background: rgb(174,238,222);
+	background: radial-gradient(circle, rgba(174,238,222,1) 0%, rgba(148,214,233,1) 100%);*/
 }
