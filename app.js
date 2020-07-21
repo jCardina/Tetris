@@ -26,13 +26,13 @@ let createBoard = function () {
 	}
 }
 
-let createUpNext = function () {
+let createDisplay = function () {
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			var square = document.createElement("div");
-			square.style.width = "20px";
-			square.style.height = "20px";
+			square.style.width = "30px";
+			square.style.height = "30px";
 
 
 			document.getElementById("preview").appendChild(square);
@@ -43,7 +43,7 @@ let createUpNext = function () {
 }
 
 createBoard();
-createUpNext();
+createDisplay();
 
 let squares = Array.from(document.querySelectorAll(".grid div"));
 
@@ -129,11 +129,12 @@ let freeze = function () {
 			
 		});
 
-		nextRandom = Math.floor(Math.random() * tetrominoes.length);
 		random = nextRandom;
+		nextRandom = Math.floor(Math.random() * tetrominoes.length);
 		currentTetromino = tetrominoes[random][currentRotation];
 		currentPosition = 4;
 		draw();
+		displayNextTetromino();
 	}
 }
 
@@ -200,6 +201,32 @@ let rotate = function () {
 }
 
 
+let displaySquares = document.querySelectorAll(".mini-grid div");
+const displayWidth = 4;
+let displayIndex = 0;
+
+const nextTetromino = [[1, displayWidth+1, displayWidth*2+1, 2],
+    [0, displayWidth, displayWidth+1, displayWidth*2+1],
+    [1, displayWidth, displayWidth+1, displayWidth+2],
+    [0, 1, displayWidth, displayWidth+1],
+    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1]
+    ];
+
+
+let displayNextTetromino = function () {
+
+
+	displaySquares.forEach(square => {
+		square.classList.remove("tetromino");
+	});
+
+	nextTetromino[nextRandom].forEach(index => {
+		displaySquares[displayIndex + index].classList.add("tetromino");
+
+	});
+}
+
+//SEGUIR desde 1:13:59
 
 
 let controls = function (event) {
