@@ -119,7 +119,7 @@ let undraw = function () {
 
 
 
-let freeze = async function () {
+let freeze = function () {
 
 	let isNextRowTaken = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
 	
@@ -133,23 +133,24 @@ let freeze = async function () {
 		random = nextRandom;
 		nextRandom = Math.floor(Math.random() * tetrominoes.length);
 		currentTetromino = tetrominoes[random][currentRotation];
+		// console.log(currentPosition + "b");
+		displayNextTetromino();
+		addScore();
 		currentPosition = 4;
 		draw();
-		console.log(currentPosition + "b");
-		displayNextTetromino();
-		await addScore();
-		console.log(currentPosition + "c");
+		gameOver();
+		// console.log(currentPosition + "c");
 	}
 }
 
 
 
-let moveDown = async function () {
+let moveDown = function () {
 	undraw();
 	currentPosition += width;
-	console.log(currentPosition);
+	// console.log(currentPosition);
 	draw();
-	await freeze();
+	freeze();
 }
 
 let moveLeft = function () {
@@ -157,7 +158,7 @@ let moveLeft = function () {
 
 	let isAtLeftEdge = currentTetromino.some(index => (currentPosition + index) % width === 0);
 
-	let isLeftTaken = currentTetromino.some(index => squares[currentPosition + index - 1].classList.contains("taken")); //(minuto 55.30)
+	let isLeftTaken = currentTetromino.some(index => squares[currentPosition + index - 1].classList.contains("taken"));
 
 	if (!isAtLeftEdge && !isLeftTaken) {
 		undraw();
@@ -188,7 +189,7 @@ let moveRight = function () {
 
 }
 
-//prueba
+
 
 let rotate = function () {
 
@@ -250,8 +251,9 @@ let addScore = function () {
 
 			const squaresRemoved = squares.splice(i, width);
 			squares = squaresRemoved.concat(squares);
-			console.log(squares);
+			// console.log(squares);
 
+			// squares[4].style.backgroundColor = "red";
 			squares.forEach(square => {
 				grid.appendChild(square);
 			});
@@ -268,7 +270,21 @@ let addScore = function () {
 	}
 }
 
-//arreglar rotacion de preview y elongacion cuando addscore
+let gameOver = function () {
+
+	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
+
+	if (isPositionTaken) {
+		// scoreDisplay.textContent = "";
+		console.log("gameOver");
+		clearInterval(timer);
+	}
+}
+
+//arreglar rotacion de preview y que cambia de ficha
+//ordenar
+//que no funcione en pausa
+//agregar opuestos de fichas
 
 
 let controls = function (event) {
