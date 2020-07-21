@@ -7,11 +7,11 @@ const startBtn = document.getElementById("start_button");
 let nextRandom = 0;
 
 const colors = [
-'orange',
-'red',
-'purple',
-'green',
-'blue'
+'#ffca75',
+'#49efa6',
+'#ed6f84',
+'#e7ec71',
+'#50c2ff'
 ];
 
 
