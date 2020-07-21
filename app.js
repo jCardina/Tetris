@@ -1,7 +1,8 @@
 const grid = document.querySelector("#container");
 const width = 10;
 // const height = 20;
-const score = document.getElementById("score");
+const scoreDisplay = document.getElementById("score");
+let score = 0;
 const startBtn = document.getElementById("start_button");
 let nextRandom = 0;
 
@@ -118,7 +119,7 @@ let undraw = function () {
 
 
 
-let freeze = function () {
+let freeze = async function () {
 
 	let isNextRowTaken = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
 	
@@ -134,17 +135,21 @@ let freeze = function () {
 		currentTetromino = tetrominoes[random][currentRotation];
 		currentPosition = 4;
 		draw();
+		console.log(currentPosition + "b");
 		displayNextTetromino();
+		await addScore();
+		console.log(currentPosition + "c");
 	}
 }
 
 
 
-let moveDown = function () {
+let moveDown = async function () {
 	undraw();
 	currentPosition += width;
+	console.log(currentPosition);
 	draw();
-	freeze();
+	await freeze();
 }
 
 let moveLeft = function () {
@@ -206,11 +211,11 @@ const displayWidth = 4;
 let displayIndex = 0;
 
 const nextTetromino = [[1, displayWidth+1, displayWidth*2+1, 2],
-    [0, displayWidth, displayWidth+1, displayWidth*2+1],
-    [1, displayWidth, displayWidth+1, displayWidth+2],
-    [0, 1, displayWidth, displayWidth+1],
-    [1, displayWidth+1, displayWidth*2+1, displayWidth*3+1]
-    ];
+[0, displayWidth, displayWidth+1, displayWidth*2+1],
+[1, displayWidth, displayWidth+1, displayWidth+2],
+[0, 1, displayWidth, displayWidth+1],
+[1, displayWidth+1, displayWidth*2+1, displayWidth*3+1]
+];
 
 
 let displayNextTetromino = function () {
@@ -225,8 +230,45 @@ let displayNextTetromino = function () {
 
 	});
 }
+let timer;
 
-//SEGUIR desde 1:13:59
+let addScore = function () {
+
+	for (i = 0; i < 199; i += width) {
+
+		const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
+
+		let isRowTaken = row.every(index => squares[index].classList.contains("taken"));
+
+		if (isRowTaken) {
+			// clearInterval(timer);
+			score += 10;
+			scoreDisplay.textContent = score;
+			row.forEach(index => {
+				squares[index].classList.remove("taken", "tetromino");
+			});
+
+			const squaresRemoved = squares.splice(i, width);
+			squares = squaresRemoved.concat(squares);
+			console.log(squares);
+
+			squares.forEach(square => {
+				grid.appendChild(square);
+			});
+
+
+			// currentPosition = 4;
+			// draw();
+			// timer = setInterval(moveDown, 1000);
+			// return "red";
+			// currentRotation = 0;
+
+		}
+		
+	}
+}
+
+//arreglar rotacion de preview y elongacion cuando addscore
 
 
 let controls = function (event) {
@@ -245,8 +287,23 @@ let controls = function (event) {
 	}
 }
 
-// moveDown();
-draw();
-let timer = setInterval(moveDown, 1000);
+
+
 document.addEventListener('keyup', controls);
 
+
+startBtn.addEventListener('click', () => {
+
+	if (timer) {
+		clearInterval(timer);
+		timer = null;
+	} else {
+		draw();
+		timer = setInterval(moveDown, 1000);
+		nextRandom = Math.floor(Math.random() * tetrominoes.length);
+		displayNextTetromino();
+		//que no se puedan mover las fichas en pausa
+	}
+});
+
+//1.29.24
