@@ -142,18 +142,19 @@ let freeze = function () {
 
 		random = nextRandom;
 		nextRandom = Math.floor(Math.random() * tetrominoes.length);
+		currentRotation = 0;
 		currentTetromino = tetrominoes[random][currentRotation];
 		// console.log(currentPosition + "b");
 		displayNextTetromino();
 		addScore();
 		currentPosition = 4;
-		draw();
+		// draw();
 		gameOver();
 
-		// if (!over) {
-		// 	draw();
-		// 	console.log("not over");
-		// }
+		if (!over) {
+			draw();
+			console.log("not over");
+		}
 		// console.log(currentPosition + "c");
 	}
 }
@@ -297,6 +298,8 @@ let gameOver = function () {
 
 	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
 
+	let isFirstRow = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
+
 	// let isFirstRow = function () {
 
 	// 	let firstRow = false;
@@ -318,7 +321,7 @@ let gameOver = function () {
 	// console.log(row);
 	// console.log(currentPosition + index - width);
 
-	if (isPositionTaken) {
+	if (isPositionTaken || isFirstRow) {
 		// scoreDisplay.textContent = "";
 		console.log("gameOver");
 		clearInterval(timer);
