@@ -221,11 +221,12 @@ let displaySquares = document.querySelectorAll(".mini-grid div");
 const displayWidth = 4;
 let displayIndex = 0;
 
-const nextTetromino = [[1, displayWidth+1, displayWidth*2+1, 2],
-[0, displayWidth, displayWidth+1, displayWidth*2+1],
-[1, displayWidth, displayWidth+1, displayWidth+2],
-[0, 1, displayWidth, displayWidth+1],
-[1, displayWidth+1, displayWidth*2+1, displayWidth*3+1]
+const nextTetromino = [
+[5, 6, 9, 13],
+[6, 7, 9, 10],
+[5, 8, 9, 10],
+[5, 6, 9, 10],
+[2, 6, 10, 14]
 ];
 
 
@@ -357,4 +358,4 @@ startBtn.addEventListener('click', () => {
 	}
 });
 
-//1.29.24
+
