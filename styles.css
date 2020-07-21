@@ -6,7 +6,8 @@
 	background-color: rgba(0, 0, 0, 0.1);
 	border: 5px solid rgba(255, 255, 255, 0.6);
 	border-radius: 4px;
-	margin: auto;
+	/*margin: auto;
+	margin-top: 80px;*/
 }
 
 .tetromino {
@@ -23,6 +24,10 @@
 	background-color: rgba(0, 0, 0, 0.1);
 	border: 5px solid rgba(255, 255, 255, 0.6);
 	border-radius: 4px;
+	position: absolute;
+	top: 250px;
+	left: calc(100% - 250px);
+	padding: 12px;
 	
 }
 
@@ -34,4 +39,29 @@ body {
 	background: radial-gradient(circle, rgba(174,238,214,1) 0%, rgba(148,187,233,1) 100%);*/
 	/*background: rgb(174,238,222);
 	background: radial-gradient(circle, rgba(174,238,222,1) 0%, rgba(148,214,233,1) 100%);*/
+	font-family: 'Rajdhani', sans-serif;
+	width: 100%;
+	margin: 0;
+
+}
+
+h3, button {
+	position: absolute;
+}
+
+
+
+h1 {
+	text-align: center;
+	font-size: 72px;
+	letter-spacing: 18px;
+	text-indent: 18px;
+	/*text-shadow: 2px 2px #000000;*/
+	color: #FFFFFF;
+}
+
+.gridsCont {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
 }
