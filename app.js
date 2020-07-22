@@ -419,7 +419,7 @@ musicBtn.addEventListener("click", function() {
 	}
 });
 
-let songs = ["./bensound-endlessmotion.mp3", "./bensound-perception.mp3"];
+let songs = ["./bensound-endlessmotion.mp3", "./bensound-dreams.mp3", "./bensound-perception.mp3", "./bensound-summer.mp3", "./bensound-goinghigher.mp3"];
 
 let songPlaying = 0;
 
@@ -427,8 +427,8 @@ audio.addEventListener('ended', function() {
 	
 	songPlaying++;
 
-	if (songPlaying > 1) {
-		
+	if (songPlaying > 4) {
+
 		songPlaying = 0;
 	}
 
