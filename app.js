@@ -162,7 +162,7 @@ let freeze = function () {
 
 
 let moveDown = function () {
-	console.log(over);
+	// console.log(over);
 
 	if(!over) {
 		undraw();
@@ -320,10 +320,6 @@ let gameOver = function () {
 		// currentPosition < 10);
 	// console.log(row);
 	// console.log(currentPosition + index - width);
-	if (!isPositionTaken && isFirstRow) {
-		draw();
-	}
-
 	if (isPositionTaken || isFirstRow) {
 		// scoreDisplay.textContent = "";
 		console.log("gameOver");
@@ -331,10 +327,132 @@ let gameOver = function () {
 		over = true;
 	}
 
+	if (!isPositionTaken && isFirstRow) {
+		draw();
+	}
+
+	console.log(isPositionTaken, "position");
+	console.log(isFirstRow, "1row");
+
+	if (isPositionTaken && isFirstRow) {
+		console.log("caso");
+
+		// let freeRows = checkFreeRows();
+		// console.log(freeRows, "rows");
+
+		//check height if heigest index en pos 4 es mayor 30 tiene 4 fichas
+		// let tetroHeight = checkTetrominoHeight();
+		console.log(currentTetromino, "tetro");
+
+		// currentTetromino.forEach(index => {
+		// 	index -= 10;
+		// });
+
+		for (j = 0; j < currentTetromino.length; j++) {
+			currentTetromino[j] -= width;
+		}
+		
+		currentTetromino = currentTetromino.filter(function(x){
+			return x > -1 }
+			);
+
+		console.log(currentTetromino, "tetro");
+
+		for (i = 0; i < 3; i++) {
+
+			let isNewPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
+
+			if (isNewPositionTaken) {
+				// currentTetromino.forEach(index => {
+				// 	index -= width;
+				// });
+				for (z = 0; z < currentTetromino.length; z++) {
+					currentTetromino[z] -= width;
+				}
+
+				currentTetromino = currentTetromino.filter(function(x){
+					return x > -1 }
+					);
+				console.log(currentTetromino, "tetro");
+			} else {
+				break;
+			}
+
+		}
+		console.log(currentTetromino, "tetro");
+
+		currentTetromino.forEach(index => { //optimizar
+
+			// if (freeRows == 1 && tetroHeight < 20) {
+			// 	//desplaza fichas hacia arriba
+			// 	index -=10;
+			// } else if (freeRows == 1 && tetroHeight < 30) {
+			// 	index -=20;
+			// } else if (freeRows == 1 && tetroHeight > 30) {
+			// 	index -=30;
+			// }
+
+
+			// if (freeRows == 2 && tetroHeight < 30) {
+			// 	index -=10;
+			// } else if (freeRows == 2 && tetroHeight > 30) {
+			// 	index -=20;
+			// }
+
+			// if (freeRows == 3 && tetroHeight > 30) {
+			// 	index -=10;
+			// }
+
+
+
+			let squareToDraw = squares[currentPosition + index];
+
+			// if ((currentPosition + index) > 0 && (currentPosition + index) < 30) {
+				squareToDraw.classList.add("tetromino");
+				squareToDraw.style.backgroundColor = colors[random];
+			// }
+
+		});
+	}
+
+	
+
+}
+
+
+// function checkFreeRows () {
+
+// 	let freeRows = 3;
+
+// 	for (i = 0; i < 30; i += width) {
+
+// 		const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
+
+// 		let isRowTaken = row.some(index => squares[index].classList.contains("taken"));
+
+// 		if (isRowTaken) {
+// 			freeRows--;
+// 		}
+// 	}
+
+// 	return freeRows;
+
+
+// }
+
+function checkTetrominoHeight () {
+	//check height if heigest index en pos 4 es mayor 30 tiene 4 fichas
+
+	let tetroToCheck = currentTetromino;
+
+	let lowestSquare = Math.max(tetroToCheck[0], tetroToCheck[1], tetroToCheck[2], tetroToCheck[4]);
+
+	return lowestSquare;
 }
 
 //arreglar rotacion de Ztetromino
 //ordenar
+//chequear game over con movedown manual
 
 
 
