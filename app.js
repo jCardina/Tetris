@@ -333,10 +333,9 @@ let gameOver = function () {
 
 }
 
-//arreglar rotacion de preview y que cambia de ficha
+//arreglar rotacion de Ztetromino
 //ordenar
-//que no funcione en pausa
-//agregar opuestos de fichas
+
 
 
 let controls = function (event) {
@@ -358,9 +357,26 @@ let controls = function (event) {
 	}
 }
 
+let avoidScrolling = function (event) {
+
+	if (event.keyCode === 37) {
+			event.preventDefault();
+
+		} else if (event.keyCode === 38) {
+			event.preventDefault();
+
+		} else if (event.keyCode === 39) {
+			event.preventDefault();
+
+		} else if (event.keyCode === 40) {
+			event.preventDefault();
+		}
+}
+
 let started = false;
 
 document.addEventListener('keyup', controls);
+window.addEventListener('keydown', avoidScrolling);
 
 
 startBtn.addEventListener('click', () => {
