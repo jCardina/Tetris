@@ -65,3 +65,26 @@ h1 {
 	justify-content: center;
 	flex-direction: row;
 }
+
+
+#musicBtn {
+	height: 40px;
+	width: 40px;
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 50%;
+	border: 0px;
+	font-size: 20px; 
+	text-indent: -3px;
+	top: 300px;
+	left: 80px;
+	outline: 0;
+}
+
+#musicBtn:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #FFFFFF;
+}
+
+#musicBtn.paused {
+	color: #d7dade;
+}
