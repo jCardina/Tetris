@@ -360,17 +360,17 @@ let controls = function (event) {
 let avoidScrolling = function (event) {
 
 	if (event.keyCode === 37) {
-			event.preventDefault();
+		event.preventDefault();
 
-		} else if (event.keyCode === 38) {
-			event.preventDefault();
+	} else if (event.keyCode === 38) {
+		event.preventDefault();
 
-		} else if (event.keyCode === 39) {
-			event.preventDefault();
+	} else if (event.keyCode === 39) {
+		event.preventDefault();
 
-		} else if (event.keyCode === 40) {
-			event.preventDefault();
-		}
+	} else if (event.keyCode === 40) {
+		event.preventDefault();
+	}
 }
 
 let started = false;
@@ -378,7 +378,7 @@ let started = false;
 document.addEventListener('keyup', controls);
 window.addEventListener('keydown', avoidScrolling);
 
-var audio = document.getElementById("music");
+let audio = document.getElementById("music");
 audio.volume = 0.2;
 let musicBtn = document.getElementById("musicBtn");
 
@@ -417,6 +417,25 @@ musicBtn.addEventListener("click", function() {
 		audio.pause();
 		musicBtn.classList.add("paused");
 	}
+});
+
+let songs = ["./bensound-endlessmotion.mp3", "./bensound-perception.mp3"];
+
+let songPlaying = 0;
+
+audio.addEventListener('ended', function() {
+	
+	songPlaying++;
+
+	if (songPlaying > 1) {
+		
+		songPlaying = 0;
+	}
+
+	audio.src = songs[songPlaying];
+	audio.pause();
+	audio.load();
+	audio.play();
 });
 
 // musicBtn.click();
