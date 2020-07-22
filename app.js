@@ -378,6 +378,8 @@ let started = false;
 document.addEventListener('keyup', controls);
 window.addEventListener('keydown', avoidScrolling);
 
+var audio = document.getElementById("music");
+audio.volume = 0.2;
 
 startBtn.addEventListener('click', () => {
 
@@ -394,10 +396,25 @@ startBtn.addEventListener('click', () => {
 			nextRandom = Math.floor(Math.random() * tetrominoes.length);
 			displayNextTetromino();
 			started = true;
+			audio.play();
 		}
 	}
 });
 
+// audio.autoplay = true;
 
+let musicBtn = document.getElementById("musicBtn");
 
+musicBtn.addEventListener("click", function() {
+
+	if (audio.paused) {
+		audio.play();
+		musicBtn.classList.remove("paused");
+	} else {
+		audio.pause();
+		musicBtn.classList.add("paused");
+	}
+});
+
+// musicBtn.click();
 
