@@ -12,24 +12,46 @@
 	<link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 <body>
+	<button id="musicBtn" class="paused"><i class="fa fa-music" aria-hidden="true"></i></button>
 	
 	<h1>TETRIS</h1>
-	
-	<h3>Score: <span id="score">0</span></h3>
 
-	<button id="start_button">Start/Pause</button>
+	<div class="columnC">
+		<div class="firstC">
+			<button id="start_button" class="start">START</button>
+			
+		</div>
 
-	<div class="gridsCont">
-		<div class="grid" id="container"></div>
+		<div class="gridCont">
+			<div class="grid" id="container"></div>
 
-		<div class="mini-grid" id="preview"></div>
+		</div>
+
+
+		<div class="upNext">
+			<h3>NEXT</h3>
+			<div class="mini-grid" id="preview"></div>
+			
+			<h3>SCORE: <span id="score">0</span></h3>
+		</div>
+
+
+		
 	</div>
+
+	
+
+
 
 	<audio id="music" src="./bensound-endlessmotion.mp3" type="audio/mpeg" loop></audio>
 
-	<button id="musicBtn" class="paused"><i class="fa fa-music" aria-hidden="true"></i></button>
+	<footer>
+		<p>Music: https://www.bensound.com</p>
+	</footer>
 
-	<p>Music: https://www.bensound.com</p>
+
 	<script type="text/javascript" src="./app.js"></script>
 </body>
 </html>
+
+<!-- secciones y meta -->
