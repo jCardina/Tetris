@@ -388,10 +388,12 @@ startBtn.addEventListener('click', () => {
 		clearInterval(timer);
 		timer = null;
 		over = true;
+		startBtn.textContent = "START";
 	} else {
 		over = false;
 		draw();
 		timer = setInterval(moveDown, 1000);
+		startBtn.textContent = "PAUSE";
 
 		if (!started) {
 			nextRandom = Math.floor(Math.random() * tetrominoes.length);
@@ -419,6 +421,7 @@ musicBtn.addEventListener("click", function() {
 
 // musicBtn.click();
 
-//agregar logo
+//agregar logo y reset
 //niveles??
+//higscore local
 
