@@ -380,6 +380,7 @@ window.addEventListener('keydown', avoidScrolling);
 
 var audio = document.getElementById("music");
 audio.volume = 0.2;
+let musicBtn = document.getElementById("musicBtn");
 
 startBtn.addEventListener('click', () => {
 
@@ -396,6 +397,7 @@ startBtn.addEventListener('click', () => {
 			nextRandom = Math.floor(Math.random() * tetrominoes.length);
 			displayNextTetromino();
 			started = true;
+			musicBtn.classList.remove("paused");
 			audio.play();
 		}
 	}
@@ -403,7 +405,6 @@ startBtn.addEventListener('click', () => {
 
 // audio.autoplay = true;
 
-let musicBtn = document.getElementById("musicBtn");
 
 musicBtn.addEventListener("click", function() {
 
@@ -417,4 +418,7 @@ musicBtn.addEventListener("click", function() {
 });
 
 // musicBtn.click();
+
+//agregar logo
+//niveles??
 
