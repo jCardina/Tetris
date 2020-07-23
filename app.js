@@ -112,6 +112,7 @@ let currentTetromino = tetrominoes[random][0];
 
 let draw = function () {
 	currentTetromino.forEach(index => {
+		// console.log([currentPosition + index]);
 		squares[currentPosition + index].classList.add("tetromino");
 		squares[currentPosition + index].style.backgroundColor = colors[random];
 	});
@@ -294,45 +295,57 @@ let addScore = function () {
 	}
 }
 
+
+//prueba
+let adjustedTetro;
+
 let adjustFinalTetromino = function () {
-	console.log(currentTetromino, "tetro");
+	// console.log(currentTetromino, "tetro");
 
+	adjustedTetro = currentTetromino;
 
-	for (j = 0; j < currentTetromino.length; j++) {
-		currentTetromino[j] -= width;
-	}
-
-	currentTetromino = currentTetromino.filter(function(x){
+	adjustedTetro = adjustedTetro.filter(function(x){
 		return x > -1 }
 		);
 
-	console.log(currentTetromino, "tetro");
+	for (j = 0; j < adjustedTetro.length; j++) {
+		adjustedTetro[j] -= width;
+	}
+
+	adjustedTetro = adjustedTetro.filter(function(x){
+		return x > -1 }
+		);
+
+	// console.log(adjustedTetro, "tetro");
 
 	for (i = 0; i < 3; i++) {
 
-		let isNewPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
+		let isNewPositionTaken = adjustedTetro.some(index => squares[currentPosition + index].classList.contains("taken"));
 
 		if (isNewPositionTaken) {
 
-			for (z = 0; z < currentTetromino.length; z++) {
-				currentTetromino[z] -= width;
+			for (z = 0; z < adjustedTetro.length; z++) {
+				adjustedTetro[z] -= width;
 			}
 
-			currentTetromino = currentTetromino.filter(function(x){
+			adjustedTetro = adjustedTetro.filter(function(x){
 				return x > -1 }
 				);
-			console.log(currentTetromino, "tetro");
+			// console.log(adjustedTetro, "tetro");
 		} else {
 			break;
 		}
 	}
 
-	console.log(currentTetromino, "tetro");
+	// console.log(adjustedTetro, "tetronuevo");
+	// console.log(currentTetromino, "tetroviejo");
 
 }
 
 
 let gameOver = function () {
+
+	console.log(currentTetromino);
 
 	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
 
@@ -344,6 +357,9 @@ let gameOver = function () {
 		console.log("gameOver");
 		clearInterval(timer);
 		over = true;
+		startBtn.style.display = "none";
+		document.getElementById("gameover").style.display = "initial";
+
 	}
 
 
@@ -359,7 +375,7 @@ let gameOver = function () {
 		adjustFinalTetromino();
 		// console.log(currentTetromino, "tetro");
 
-		currentTetromino.forEach(index => {
+		adjustedTetro.forEach(index => {
 
 			let squareToDraw = squares[currentPosition + index];
 
@@ -375,6 +391,7 @@ let gameOver = function () {
 //arreglar rotacion de Ztetromino
 //ordenar
 //chequear game over con movedown manual
+//cartel gameover
 
 
 
@@ -415,6 +432,7 @@ let avoidScrolling = function (event) {
 }
 
 let started = false;
+let resetBtn = document.getElementById("reset");
 
 document.addEventListener('keyup', controls);
 window.addEventListener('keydown', avoidScrolling);
@@ -431,22 +449,53 @@ startBtn.addEventListener('click', () => {
 		over = true;
 		startBtn.textContent = "START";
 	} else {
-		over = false;
-		draw();
-		timer = setInterval(moveDown, 1000);
-		startBtn.textContent = "PAUSE";
-
+		console.log("hola");
 		if (!started) {
+			console.log("hola2");
 			nextRandom = Math.floor(Math.random() * tetrominoes.length);
 			displayNextTetromino();
 			started = true;
 			musicBtn.classList.remove("paused");
 			audio.play();
+			resetBtn.style.display = "initial";
 		}
+
+		over = false;
+		draw();
+		timer = setInterval(moveDown, 1000);
+		startBtn.textContent = "PAUSE";
+
 	}
 });
 
-// audio.autoplay = true;
+
+
+resetBtn.addEventListener("click", function() {
+
+	clearInterval(timer);
+	timer = null;
+	score = 0;
+	scoreDisplay.textContent = "0";
+	started = false;
+	over = true;
+	startBtn.textContent = "START";
+	startBtn.style.display = "initial";
+	resetBtn.style.display = "none";
+	document.getElementById("gameover").style.display = "none";
+	random = Math.floor(Math.random()*tetrominoes.length);
+	currentTetromino = tetrominoes[random][0];
+	currentPosition = 4;
+
+	for (var i = 0; i < 200; i++) {
+		squares[i].classList.remove("taken", "tetromino");
+		squares[i].style.backgroundColor = "transparent";
+	}
+
+	displaySquares.forEach(square => {
+		square.classList.remove("tetromino");
+		square.style.backgroundColor = "transparent";
+	});
+});
 
 
 musicBtn.addEventListener("click", function() {
