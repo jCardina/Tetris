@@ -609,7 +609,7 @@ musicBtn.addEventListener("click", function() {
 	}
 });
 
-let songs = ["./bensound-endlessmotion.mp3", "./bensound-dreams.mp3", "./bensound-perception.mp3", "./bensound-summer.mp3", "./bensound-goinghigher.mp3"];
+let songs = ["../music/bensound-endlessmotion.mp3", "../music/bensound-dreams.mp3", "../music/bensound-perception.mp3", "../music/bensound-summer.mp3", "../music/bensound-goinghigher.mp3"];
 
 let songPlaying = 0;
 
@@ -632,7 +632,7 @@ audio.addEventListener('ended', function() {
 
 //agregar logo
 //niveles??
-//higscore local
+//highscore local
 //arreglar rotacion de Ztetromino
 //ordenar
 //chequear game over con movedown manual
