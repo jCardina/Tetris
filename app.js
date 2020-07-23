@@ -111,11 +111,14 @@ let currentTetromino = tetrominoes[random][0];
 
 
 let draw = function () {
+
+	console.log(currentTetromino); //revisar bug!!!
 	currentTetromino.forEach(index => {
-		// console.log([currentPosition + index]);
-		squares[currentPosition + index].classList.add("tetromino");
-		squares[currentPosition + index].style.backgroundColor = colors[random];
-	});
+			// console.log([currentPosition + index]);
+			squares[currentPosition + index].classList.add("tetromino");
+			squares[currentPosition + index].style.backgroundColor = colors[random];
+		});
+	
 }
 
 // draw();
@@ -165,11 +168,17 @@ let freeze = function () {
 let moveDown = function () {
 	// console.log(over);
 
-	if(!over) {
+	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
+	// console.log(isPositionAvailable, "positionrot");
+	// console.log(over)
+
+	if(!over && !isPositionTaken) {
 		undraw();
 		currentPosition += width;
 		// console.log(currentPosition);
 		draw();
+		freeze();
+	} else if (!over && isPositionTaken) {
 		freeze();
 	}
 }
@@ -184,7 +193,7 @@ let moveLeft = function () {
 	if (!isAtLeftEdge && !isLeftTaken) {
 		undraw();
 
-		currentPosition -=1;
+		currentPosition--;
 		draw();
 
 	}
@@ -202,7 +211,7 @@ let moveRight = function () {
 	if (!isAtRightEdge && !isRightTaken) {
 		undraw();
 
-		currentPosition +=1;
+		currentPosition++;
 		draw();
 
 	}
@@ -211,19 +220,117 @@ let moveRight = function () {
 }
 
 
+let checkRotationEdges = function() {
 
-let rotate = function () {
+	let rotated = currentTetromino.slice(0);
+	
+	let isLeft = rotated.every(index => (currentPosition + index) % 10 < 3);
+	console.log(isLeft, "left");
 
-	//agregar bordes y otras piezas
+	let isRight = rotated.every(index => (currentPosition + index) % 10 > 6);
+	console.log(isRight, "right");
 
-	undraw();
 	currentRotation++;
 
 	if (currentRotation == currentTetromino.length) {
 		currentRotation = 0;
 	}
 
+	let isPositionAvailable;
+
+	//LEFT
+	console.log(tetrominoes[random][currentRotation]);
+
+	let willSplitL = tetrominoes[random][currentRotation].some(index => (currentPosition + index) % 10 > 8);
+	console.log(willSplitL, "splitL");
+
+	if (isLeft && willSplitL) {
+		// currentTetromino = tetrominoes[random][currentRotation];
+		currentPosition++;
+		isPositionAvailable = checkPosition();
+		console.log(isPositionAvailable, "position");
+
+		if (!isPositionAvailable) {
+			currentPosition--;
+			currentRotation--;
+			if (currentRotation < 0) {
+				currentRotation = 3;
+			}
+			return;
+		}
+
+	}
+
+
+	//RIGHT
+
+	for (i = 0; i < 2; i++) {
+		let willSplitR = tetrominoes[random][currentRotation].some(index => (currentPosition + index) % 10 == 0);
+
+		if (isRight && willSplitR) {
+
+			currentPosition--;
+			isPositionAvailable = checkPosition();
+
+			if (!isPositionAvailable && i == 0) {
+				currentPosition++;
+				currentRotation--;
+				if (currentRotation < 0) {
+					currentRotation = 3;
+				}
+				return;
+			} else if (!isPositionAvailable && i == 1) {
+				currentPosition += 2;
+				currentRotation--;
+				if (currentRotation < 0) {
+					currentRotation = 3;
+				}
+				return;
+			}
+
+		}
+
+	}
+}
+
+let checkPosition = function() {
+
+	let isNewPositionTaken = tetrominoes[random][currentRotation].some(index => squares[currentPosition + index].classList.contains("taken"));
+
+	if (isNewPositionTaken) {
+		return false;
+	} else {
+		return true;
+	}
+
+}
+
+
+let rotate = function() {
+
+	//agregar  otras piezas
+
+	undraw();
+	checkRotationEdges();
+	// currentRotation++;
+
+	// if (currentRotation == currentTetromino.length) {
+	// 	currentRotation = 0;
+	// }
+	let isPositionAvailable = checkPosition();
+	// console.log(isPositionAvailable, "positionNeutro");
+
+	if (!isPositionAvailable) {
+		currentRotation--;
+		if (currentRotation < 0) {
+			currentRotation = 3;
+		}
+		// console.log(currentRotation, "rotation");
+	}
+	// console.log("before", currentTetromino);
 	currentTetromino = tetrominoes[random][currentRotation];
+	// console.log("after", currentTetromino);
+
 	draw();
 }
 
@@ -300,23 +407,23 @@ let addScore = function () {
 let adjustedTetro;
 
 let adjustFinalTetromino = function () {
-	// console.log(currentTetromino, "tetro");
+	//copy of array
+	adjustedTetro = currentTetromino.slice(0);
 
-	adjustedTetro = currentTetromino;
-
-	adjustedTetro = adjustedTetro.filter(function(x){
-		return x > -1 }
-		);
+	// adjustedTetro = adjustedTetro.filter(function(x){
+	// 	return x > -1 }
+	// 	);
 
 	for (j = 0; j < adjustedTetro.length; j++) {
 		adjustedTetro[j] -= width;
 	}
+	// console.log(currentTetromino, "tetro");
+	// console.log(adjustedTetro, "tetronuevo");
 
 	adjustedTetro = adjustedTetro.filter(function(x){
 		return x > -1 }
 		);
 
-	// console.log(adjustedTetro, "tetro");
 
 	for (i = 0; i < 3; i++) {
 
@@ -388,13 +495,6 @@ let gameOver = function () {
 }
 
 
-//arreglar rotacion de Ztetromino
-//ordenar
-//chequear game over con movedown manual
-//cartel gameover
-
-
-
 
 let controls = function (event) {
 
@@ -449,9 +549,9 @@ startBtn.addEventListener('click', () => {
 		over = true;
 		startBtn.textContent = "START";
 	} else {
-		console.log("hola");
+		
 		if (!started) {
-			console.log("hola2");
+			
 			nextRandom = Math.floor(Math.random() * tetrominoes.length);
 			displayNextTetromino();
 			started = true;
@@ -528,9 +628,12 @@ audio.addEventListener('ended', function() {
 	audio.play();
 });
 
-// musicBtn.click();
 
-//agregar logo y reset
+
+//agregar logo
 //niveles??
 //higscore local
+//arreglar rotacion de Ztetromino
+//ordenar
+//chequear game over con movedown manual
 
