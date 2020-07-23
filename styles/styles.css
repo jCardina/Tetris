@@ -164,6 +164,36 @@ h1 {
 	box-sizing: border-box;
 }
 
+#highScoreTable {
+	display: none;
+}
+
+#highScoreTable h3{
+	color: #000000;
+	margin-bottom: 10px; 
+	/*display: flex;
+	flex-flow: column nowrap;*/
+}
+
+ol {
+	font-size: 32px;
+	font-weight: bold;
+	/*margin-top: 0px;*/
+	margin: 0px 20px 0px 10px;
+	/*margin-left: 20px;*/
+	/*margin-right: 20px;*/
+	/*padding: 0 20px 0 20px;*/
+}
+
+li {
+	text-align: right;
+	color: #000000;
+}
+
+/*li span {
+	color: #FFFFFF;
+}*/
+
 .gridCont {
 	display: flex;
 	justify-content: center;
