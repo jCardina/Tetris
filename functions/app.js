@@ -58,7 +58,6 @@ createDisplay();
 
 let squares = Array.from(document.querySelectorAll(".grid div"));
 
-// console.log(squares);
 
 const lTetromino = [
 [1, width+1, width*2+1, 2],
@@ -103,27 +102,22 @@ let currentRotation = 0;
 
 
 let random = Math.floor(Math.random()*tetrominoes.length);
-// console.log(random)
 
 
 let currentTetromino = tetrominoes[random][0];
-
-
-
 
 
 let draw = function () {
 
 	// console.log(currentTetromino);
 	currentTetromino.forEach(index => {
-			// console.log([currentPosition + index]);
-			squares[currentPosition + index].classList.add("tetromino");
-			squares[currentPosition + index].style.backgroundColor = colors[random];
-		});
+		// console.log([currentPosition + index]);
+		squares[currentPosition + index].classList.add("tetromino");
+		squares[currentPosition + index].style.backgroundColor = colors[random];
+	});
 	
 }
 
-// draw();
 
 let undraw = function () {
 	currentTetromino.forEach(index => {
@@ -174,7 +168,7 @@ let freeze = function() {
 		displayNextTetromino();
 		addScore();
 		currentPosition = 4;
-		// draw();
+
 		gameOver();
 
 		if (!over) {
@@ -271,7 +265,7 @@ let checkRotationEdges = function() {
 	// console.log(willSplitL, "splitL");
 
 	if (isLeft && willSplitL) {
-		// currentTetromino = tetrominoes[random][currentRotation];
+
 		currentPosition++;
 		isPositionAvailable = checkPosition();
 		// console.log(isPositionAvailable, "position");
@@ -334,15 +328,9 @@ let checkPosition = function() {
 
 let rotate = function() {
 
-	//agregar  otras piezas
-
 	undraw();
 	checkRotationEdges();
-	// currentRotation++;
-
-	// if (currentRotation == currentTetromino.length) {
-	// 	currentRotation = 0;
-	// }
+	
 	let isPositionAvailable = checkPosition();
 	// console.log(isPositionAvailable, "positionNeutro");
 
@@ -419,13 +407,6 @@ let addScore = function () {
 			squares.forEach(square => {
 				grid.appendChild(square);
 			});
-
-
-			// currentPosition = 4;
-			// draw();
-			// timer = setInterval(moveDown, 1000);
-			// return "red";
-			// currentRotation = 0;
 
 		}
 		
@@ -714,9 +695,6 @@ let checkNewHighscore = function(score) {
 
 window.addEventListener("load", getHighscores);
 
-
-
-//niveles??
 //arreglar rotacion de Ztetromino
 //ordenar
 
