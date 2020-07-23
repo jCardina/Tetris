@@ -109,9 +109,9 @@ let currentTetromino = tetrominoes[random][0];
 
 let draw = function () {
 
-	// console.log(currentTetromino);
+	console.log(currentTetromino);
 	currentTetromino.forEach(index => {
-		// console.log([currentPosition + index]);
+		console.log([currentPosition + index]);
 		squares[currentPosition + index].classList.add("tetromino");
 		squares[currentPosition + index].style.backgroundColor = colors[random];
 	});
@@ -129,20 +129,24 @@ let undraw = function () {
 
 let over = true;
 
-
+let level = 1;
 let change = 9;
 
 let changeDifficulty = function() {
 
 	console.log("change", change);
 
-	if(playedTetrominoes > change && interval > 100) {
+	if(playedTetrominoes > change && interval > 50) {
 		clearInterval(timer);
 		console.log("interval1", interval);
 		interval -= 50;
 		console.log("interval2", interval);
 		timer = setInterval(moveDown, interval);
 		change+=9;
+		level++;
+		score+=50;
+		document.getElementById("level").textContent = level;
+		scoreDisplay.textContent = formatNumber(score);
 
 	}
 
@@ -250,8 +254,9 @@ let checkRotationEdges = function() {
 	let isRight = rotated.every(index => (currentPosition + index) % 10 > 6);
 	// console.log(isRight, "right");
 
-	currentRotation++; //++ % 4 y sacar if
-
+	currentRotation++;
+	// currentRotation = (currentRotation + 1) % 4;
+	console.log("rotation", currentRotation);
 	if (currentRotation == currentTetromino.length) {
 		currentRotation = 0;
 	}
@@ -276,6 +281,7 @@ let checkRotationEdges = function() {
 			if (currentRotation < 0) {
 				currentRotation = 3;
 			}
+			// currentRotation = (currentRotation - 1) % 4;
 			return;
 		}
 
@@ -298,6 +304,7 @@ let checkRotationEdges = function() {
 				if (currentRotation < 0) {
 					currentRotation = 3;
 				}
+				// currentRotation = (currentRotation - 1) % 4;
 				return;
 			} else if (!isPositionAvailable && i == 1) {
 				currentPosition += 2;
@@ -305,6 +312,7 @@ let checkRotationEdges = function() {
 				if (currentRotation < 0) {
 					currentRotation = 3;
 				}
+				// currentRotation = (currentRotation - 1) % 4;
 				return;
 			}
 
@@ -335,15 +343,20 @@ let rotate = function() {
 	// console.log(isPositionAvailable, "positionNeutro");
 
 	if (!isPositionAvailable) {
+		// console.log("beforeRotaA", currentRotation);
+		// // currentRotation--;
+		// // currentRotation = currentRotation % 4;
+		// console.log("beforeRotaB", currentRotation);
 		currentRotation--;
 		if (currentRotation < 0) {
 			currentRotation = 3;
 		}
 		// console.log(currentRotation, "rotation");
 	}
-	// console.log("before", currentTetromino);
+	console.log("before", currentTetromino);
+	console.log("beforeRota", currentRotation);
 	currentTetromino = tetrominoes[random][currentRotation];
-	// console.log("after", currentTetromino);
+	console.log("after", currentTetromino);
 
 	draw();
 }
@@ -600,6 +613,7 @@ resetBtn.addEventListener("click", function() {
 	timer = null;
 	score = 0;
 	scoreDisplay.textContent = "0";
+	document.getElementById("level").textContent = "1";
 	started = false;
 	over = true;
 	startBtn.textContent = "START";
@@ -609,6 +623,10 @@ resetBtn.addEventListener("click", function() {
 	random = Math.floor(Math.random()*tetrominoes.length);
 	currentTetromino = tetrominoes[random][0];
 	currentPosition = 4;
+	level = 1;
+	change = 9;
+	interval = 1000;
+	playedTetrominoes = 0
 	document.getElementById("highScoreTable").style.display = "none";
 
 	for (var i = 0; i < 200; i++) {
