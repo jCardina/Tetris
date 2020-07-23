@@ -5,6 +5,8 @@ const scoreDisplay = document.getElementById("score");
 let score = 0;
 const startBtn = document.getElementById("start_button");
 let nextRandom = 0;
+let interval = 1000;
+let playedTetrominoes = 0;
 
 const colors = [
 '#ffca75',
@@ -112,7 +114,7 @@ let currentTetromino = tetrominoes[random][0];
 
 let draw = function () {
 
-	console.log(currentTetromino); //revisar bug!!!
+	// console.log(currentTetromino);
 	currentTetromino.forEach(index => {
 			// console.log([currentPosition + index]);
 			squares[currentPosition + index].classList.add("tetromino");
@@ -133,15 +135,35 @@ let undraw = function () {
 
 let over = true;
 
-let freeze = function () {
+
+let change = 9;
+
+let changeDifficulty = function() {
+
+	console.log("change", change);
+
+	if(playedTetrominoes > change && interval > 100) {
+		clearInterval(timer);
+		console.log("interval1", interval);
+		interval -= 50;
+		console.log("interval2", interval);
+		timer = setInterval(moveDown, interval);
+		change+=9;
+
+	}
+
+
+}
+
+let freeze = function() {
 
 	let isNextRowTaken = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
-	
+
 
 	if (isNextRowTaken) {
 		currentTetromino.forEach(index => {
 			squares[currentPosition + index].classList.add("taken");
-			
+
 		});
 
 		random = nextRandom;
@@ -156,8 +178,12 @@ let freeze = function () {
 		gameOver();
 
 		if (!over) {
+			playedTetrominoes++;
+			console.log(playedTetrominoes, "played");
 			draw();
-			console.log("not over");
+			// console.log("not over");
+			changeDifficulty();
+			
 		}
 		// console.log(currentPosition + "c");
 	}
@@ -225,10 +251,10 @@ let checkRotationEdges = function() {
 	let rotated = currentTetromino.slice(0);
 	
 	let isLeft = rotated.every(index => (currentPosition + index) % 10 < 3);
-	console.log(isLeft, "left");
+	// console.log(isLeft, "left");
 
 	let isRight = rotated.every(index => (currentPosition + index) % 10 > 6);
-	console.log(isRight, "right");
+	// console.log(isRight, "right");
 
 	currentRotation++; //++ % 4 y sacar if
 
@@ -239,16 +265,16 @@ let checkRotationEdges = function() {
 	let isPositionAvailable;
 
 	//LEFT
-	console.log(tetrominoes[random][currentRotation]);
+	// console.log(tetrominoes[random][currentRotation]);
 
 	let willSplitL = tetrominoes[random][currentRotation].some(index => (currentPosition + index) % 10 > 8);
-	console.log(willSplitL, "splitL");
+	// console.log(willSplitL, "splitL");
 
 	if (isLeft && willSplitL) {
 		// currentTetromino = tetrominoes[random][currentRotation];
 		currentPosition++;
 		isPositionAvailable = checkPosition();
-		console.log(isPositionAvailable, "position");
+		// console.log(isPositionAvailable, "position");
 
 		if (!isPositionAvailable) {
 			currentPosition--;
@@ -456,7 +482,7 @@ let adjustFinalTetromino = function () {
 
 let gameOver = function () {
 
-	console.log(currentTetromino);
+	// console.log(currentTetromino);
 
 	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
 
@@ -552,6 +578,8 @@ let resetBtn = document.getElementById("reset");
 document.addEventListener('keyup', controls);
 window.addEventListener('keydown', avoidScrolling);
 
+
+
 let audio = document.getElementById("music");
 audio.volume = 0.2;
 let musicBtn = document.getElementById("musicBtn");
@@ -577,7 +605,7 @@ startBtn.addEventListener('click', () => {
 
 		over = false;
 		draw();
-		timer = setInterval(moveDown, 1000);
+		timer = setInterval(moveDown, interval);
 		startBtn.textContent = "PAUSE";
 
 	}
