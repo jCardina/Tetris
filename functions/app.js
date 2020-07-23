@@ -230,7 +230,7 @@ let checkRotationEdges = function() {
 	let isRight = rotated.every(index => (currentPosition + index) % 10 > 6);
 	console.log(isRight, "right");
 
-	currentRotation++;
+	currentRotation++; //++ % 4 y sacar if
 
 	if (currentRotation == currentTetromino.length) {
 		currentRotation = 0;
@@ -364,6 +364,10 @@ let displayNextTetromino = function () {
 }
 let timer;
 
+let formatNumber = function(num) {
+	return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+}
+
 let addScore = function () {
 
 	for (i = 0; i < 199; i += width) {
@@ -375,7 +379,7 @@ let addScore = function () {
 		if (isRowTaken) {
 			// clearInterval(timer);
 			score += 10;
-			scoreDisplay.textContent = score;
+			scoreDisplay.textContent = formatNumber(score);
 			row.forEach(index => {
 				squares[index].classList.remove("taken", "tetromino");
 				squares[index].style.backgroundColor = "transparent";
@@ -466,6 +470,17 @@ let gameOver = function () {
 		over = true;
 		startBtn.style.display = "none";
 		document.getElementById("gameover").style.display = "initial";
+		if (score > 0) {
+			console.log(score);
+			checkNewHighscore(score);
+		}
+		let topScores = document.getElementsByClassName("highScore");
+
+		for (i = 0; i < topScores.length; i++) {
+			topScores[i].textContent = formatNumber(topFive[i]);
+		}
+
+		document.getElementById("highScoreTable").style.display = "initial";
 
 	}
 
@@ -585,6 +600,7 @@ resetBtn.addEventListener("click", function() {
 	random = Math.floor(Math.random()*tetrominoes.length);
 	currentTetromino = tetrominoes[random][0];
 	currentPosition = 4;
+	document.getElementById("highScoreTable").style.display = "none";
 
 	for (var i = 0; i < 200; i++) {
 		squares[i].classList.remove("taken", "tetromino");
@@ -609,7 +625,7 @@ musicBtn.addEventListener("click", function() {
 	}
 });
 
-let songs = ["../music/bensound-endlessmotion.mp3", "../music/bensound-dreams.mp3", "../music/bensound-perception.mp3", "../music/bensound-summer.mp3", "../music/bensound-goinghigher.mp3"];
+let songs = ["./music/bensound-endlessmotion.mp3", "./music/bensound-dreams.mp3", "./music/bensound-perception.mp3", "./music/bensound-summer.mp3", "./music/bensound-goinghigher.mp3"];
 
 let songPlaying = 0;
 
@@ -628,12 +644,52 @@ audio.addEventListener('ended', function() {
 	audio.play();
 });
 
+let topFive = [0, 0, 0, 0, 0];
 
 
-//agregar logo
+let getHighscores = function() {
+
+	if (window.localStorage.highscores) {
+
+		topFive = JSON.parse(window.localStorage.getItem("highscores"));
+
+	} else {
+		window.localStorage.setItem("highscores", JSON.stringify(topFive));
+	}
+
+}
+
+
+
+
+let checkNewHighscore = function(score) {
+
+	topFive.push(score);
+	console.log(topFive);
+
+	let newHighScore = topFive.sort(function(value1, value2) {
+		if (value1 < value2) {
+			return 1;
+		} else {
+			return -1;
+		}
+	});
+
+	newHighScore.pop();
+	console.log(newHighScore);
+	window.localStorage.highscores = JSON.stringify(newHighScore);
+
+
+}
+
+
+
+window.addEventListener("load", getHighscores);
+
+
+
 //niveles??
-//highscore local
 //arreglar rotacion de Ztetromino
 //ordenar
-//chequear game over con movedown manual
+
 
