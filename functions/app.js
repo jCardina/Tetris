@@ -62,14 +62,14 @@ createDisplay();
 let squares = Array.from(document.querySelectorAll(".grid div"));
 
 
-const lTetromino = [
+const jTetromino = [
 [1, width+1, width*2+1, 2],
 [width, width+1, width+2, width*2+2],
 [1, width+1, width*2+1, width*2],
 [width, width*2, width*2+1, width*2+2]
 ];
 
-const zTetromino = [
+const sTetromino = [
 [0,width,width+1,width*2+1],
 [width+1, width+2,width*2,width*2+1],
 [0,width,width+1,width*2+1],
@@ -97,14 +97,14 @@ const iTetromino = [
 [width,width+1,width+2,width+3]
 ];
 
-const lInvTetromino = [
+const lTetromino = [
 [1, width+1, width*2+1, 0],
 [width+2, width*2, width*2+1, width*2+2],
 [1, width+1, width*2+1, width*2+2],
 [width, width+1, width+2, width*2]
 ];
 
-const zInvTetromino = [
+const zTetromino = [
 [1,width,width+1,width*2],
 [width+1, width,width*2+2,width*2+1],
 [1,width,width+1,width*2],
@@ -113,7 +113,7 @@ const zInvTetromino = [
 
 
 
-const tetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino, lInvTetromino, zInvTetromino];
+const tetrominoes = [jTetromino, sTetromino, tTetromino, oTetromino, iTetromino, lTetromino, zTetromino];
 
 let currentPosition = 4;
 let currentRotation = 0;
