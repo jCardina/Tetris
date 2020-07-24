@@ -17,7 +17,7 @@ const colors = [
 '#9ea2da',
 // "#7c97f5",
 '#e89ac2',
-'black'
+'#000000'
 ];
 
 
@@ -244,7 +244,7 @@ let freeze = function() {
 
 		random = nextRandom;
 
-		if (playedTetrominoes > 25 && (playedTetrominoes + 1) % 10 === 0) {
+		if (playedTetrominoes > 45 && (playedTetrominoes + 1) % 10 === 0) {
 			nextRandom = 7;
 		} else {
 
