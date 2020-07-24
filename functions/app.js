@@ -13,7 +13,10 @@ const colors = [
 '#49efa6',
 '#ed6f84',
 '#e7ec71',
-'#50c2ff'
+'#50c2ff',
+'#9ea2da',
+// "#7c97f5",
+'#e89ac2'
 ];
 
 
@@ -94,8 +97,23 @@ const iTetromino = [
 [width,width+1,width+2,width+3]
 ];
 
+const lInvTetromino = [
+[1, width+1, width*2+1, 0],
+[width+2, width*2, width*2+1, width*2+2],
+[1, width+1, width*2+1, width*2+2],
+[width, width+1, width+2, width*2]
+];
 
-const tetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino];
+const zInvTetromino = [
+[1,width,width+1,width*2],
+[width+1, width,width*2+2,width*2+1],
+[1,width,width+1,width*2],
+[width+1, width,width*2+2,width*2+1]
+];
+
+
+
+const tetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino, lInvTetromino, zInvTetromino];
 
 let currentPosition = 4;
 let currentRotation = 0;
@@ -103,6 +121,15 @@ let currentRotation = 0;
 
 let random = Math.floor(Math.random()*tetrominoes.length);
 
+// borrar----
+
+// zInvTetromino[3].forEach(index => {
+// 	// console.log([currentPosition + index]);
+// 	squares[currentPosition + index].classList.add("tetromino");
+// 	squares[currentPosition + index].style.backgroundColor = colors[5];
+// });
+
+// -------
 
 let currentTetromino = tetrominoes[random][0];
 
@@ -255,11 +282,11 @@ let checkRotationEdges = function() {
 	// console.log(isRight, "right");
 
 	currentRotation++;
-	// currentRotation = (currentRotation + 1) % 4;
+	currentRotation = (currentRotation % 4 + 4) % 4;
 	console.log("rotation", currentRotation);
-	if (currentRotation == currentTetromino.length) {
-		currentRotation = 0;
-	}
+	// if (currentRotation == currentTetromino.length) {
+	// 	currentRotation = 0;
+	// }
 
 	let isPositionAvailable;
 
@@ -278,10 +305,10 @@ let checkRotationEdges = function() {
 		if (!isPositionAvailable) {
 			currentPosition--;
 			currentRotation--;
-			if (currentRotation < 0) {
-				currentRotation = 3;
-			}
-			// currentRotation = (currentRotation - 1) % 4;
+			// if (currentRotation < 0) {
+			// 	currentRotation = 3;
+			// }
+			currentRotation = (currentRotation % 4 + 4) % 4;
 			return;
 		}
 
@@ -301,18 +328,18 @@ let checkRotationEdges = function() {
 			if (!isPositionAvailable && i == 0) {
 				currentPosition++;
 				currentRotation--;
-				if (currentRotation < 0) {
-					currentRotation = 3;
-				}
-				// currentRotation = (currentRotation - 1) % 4;
+				// if (currentRotation < 0) {
+				// 	currentRotation = 3;
+				// }
+				currentRotation = (currentRotation % 4 + 4) % 4;
 				return;
 			} else if (!isPositionAvailable && i == 1) {
 				currentPosition += 2;
 				currentRotation--;
-				if (currentRotation < 0) {
-					currentRotation = 3;
-				}
-				// currentRotation = (currentRotation - 1) % 4;
+				// if (currentRotation < 0) {
+				// 	currentRotation = 3;
+				// }
+				currentRotation = (currentRotation % 4 + 4) % 4;
 				return;
 			}
 
@@ -343,14 +370,14 @@ let rotate = function() {
 	// console.log(isPositionAvailable, "positionNeutro");
 
 	if (!isPositionAvailable) {
-		// console.log("beforeRotaA", currentRotation);
-		// // currentRotation--;
-		// // currentRotation = currentRotation % 4;
-		// console.log("beforeRotaB", currentRotation);
+		console.log("beforeRotaA", currentRotation);
 		currentRotation--;
-		if (currentRotation < 0) {
-			currentRotation = 3;
-		}
+		currentRotation = (currentRotation % 4 + 4) % 4;
+		console.log("beforeRotaB", currentRotation);
+		// currentRotation--;
+		// if (currentRotation < 0) {
+		// 	currentRotation = 3;
+		// }
 		// console.log(currentRotation, "rotation");
 	}
 	console.log("before", currentTetromino);
@@ -371,7 +398,9 @@ const nextTetromino = [
 [6, 7, 9, 10],
 [5, 8, 9, 10],
 [5, 6, 9, 10],
-[2, 6, 10, 14]
+[2, 6, 10, 14],
+[5, 6, 10, 14],
+[5, 6, 10, 11]
 ];
 
 
@@ -427,7 +456,7 @@ let addScore = function () {
 }
 
 
-//prueba
+
 let adjustedTetro;
 
 let adjustFinalTetromino = function () {
@@ -575,7 +604,7 @@ window.addEventListener('keydown', avoidScrolling);
 
 
 let audio = document.getElementById("music");
-audio.volume = 0.2;
+audio.volume = 0.1;
 let musicBtn = document.getElementById("musicBtn");
 
 startBtn.addEventListener('click', () => {
@@ -592,9 +621,13 @@ startBtn.addEventListener('click', () => {
 			nextRandom = Math.floor(Math.random() * tetrominoes.length);
 			displayNextTetromino();
 			started = true;
-			musicBtn.classList.remove("paused");
-			audio.play();
 			resetBtn.style.display = "initial";
+			
+			if (musicBtn.classList.contains("stopped")) {
+				musicBtn.classList.remove("paused");
+				musicBtn.classList.remove("stopped");
+				audio.play();
+			}
 		}
 
 		over = false;
@@ -713,7 +746,9 @@ let checkNewHighscore = function(score) {
 
 window.addEventListener("load", getHighscores);
 
-//arreglar rotacion de Ztetromino
+
 //ordenar
+//bomba?
+
 
 
