@@ -16,7 +16,8 @@ const colors = [
 '#50c2ff',
 '#9ea2da',
 // "#7c97f5",
-'#e89ac2'
+'#e89ac2',
+'black'
 ];
 
 
@@ -111,15 +112,23 @@ const zTetromino = [
 [width+1, width,width*2+2,width*2+1]
 ];
 
+const bomb = [
+[0,1,width,width+1],
+[0,1,width,width+1],
+[0,1,width,width+1],
+[0,1,width,width+1]
+];
 
 
-const tetrominoes = [jTetromino, sTetromino, tTetromino, oTetromino, iTetromino, lTetromino, zTetromino];
+const tetrominoes = [jTetromino, sTetromino, tTetromino, oTetromino, iTetromino, lTetromino, zTetromino, bomb];
+
+//--------PRUEBA BOMBA-----
 
 let currentPosition = 4;
 let currentRotation = 0;
 
 
-let random = Math.floor(Math.random()*tetrominoes.length);
+let random = Math.floor(Math.random()*(tetrominoes.length - 1));
 
 // borrar----
 
@@ -136,9 +145,9 @@ let currentTetromino = tetrominoes[random][0];
 
 let draw = function () {
 
-	console.log(currentTetromino);
+	// console.log(currentTetromino);
 	currentTetromino.forEach(index => {
-		console.log([currentPosition + index]);
+		// console.log([currentPosition + index]);
 		squares[currentPosition + index].classList.add("tetromino");
 		squares[currentPosition + index].style.backgroundColor = colors[random];
 	});
@@ -161,7 +170,7 @@ let change = 9;
 
 let changeDifficulty = function() {
 
-	console.log("change", change);
+	// console.log("change", change);
 
 	if(playedTetrominoes > change && interval > 50) {
 		clearInterval(timer);
@@ -169,7 +178,7 @@ let changeDifficulty = function() {
 		interval -= 50;
 		console.log("interval2", interval);
 		timer = setInterval(moveDown, interval);
-		change+=9;
+		change+=10;
 		level++;
 		score+=50;
 		document.getElementById("level").textContent = level;
@@ -179,6 +188,40 @@ let changeDifficulty = function() {
 
 
 }
+
+let setBomb = function() {
+
+	let position = currentTetromino[0] + currentPosition;
+	console.log(position);
+
+	let line = Math.floor(position / 10) * 10;
+	console.log(line);
+
+	for (i = line; i < (line + 20); i ++) {
+
+		squares[i].style.backgroundColor = "#f3fffe87";
+		squares[i].classList.remove("taken", "tetromino");
+	}
+	clearInterval(timer);
+
+	setTimeout(function(){
+		for (i = line; i < (line + 20); i ++) {
+			squares[i].style.backgroundColor = "transparent";
+		}
+		const squaresRemoved = squares.splice(line, 20);
+		squares = squaresRemoved.concat(squares);
+		squares.forEach(square => {
+			grid.appendChild(square);
+		});
+		timer = setInterval(moveDown, interval);
+	}, 90);
+
+	score +=20;
+	scoreDisplay.textContent = formatNumber(score);
+
+
+}
+//sacar intervalo  50?
 
 let freeze = function() {
 
@@ -191,12 +234,29 @@ let freeze = function() {
 
 		});
 
+		let exploded = false;
+
+		if (random == 7) {
+			setBomb();
+			exploded = true;
+		}
+
+
 		random = nextRandom;
-		nextRandom = Math.floor(Math.random() * tetrominoes.length);
+
+		if (playedTetrominoes > 25 && (playedTetrominoes + 1) % 10 === 0) {
+			nextRandom = 7;
+		} else {
+
+			nextRandom = Math.floor(Math.random() * (tetrominoes.length - 1));
+		}
+
 		currentRotation = 0;
 		currentTetromino = tetrominoes[random][currentRotation];
 		// console.log(currentPosition + "b");
 		displayNextTetromino();
+
+
 		addScore();
 		currentPosition = 4;
 
@@ -205,7 +265,11 @@ let freeze = function() {
 		if (!over) {
 			playedTetrominoes++;
 			console.log(playedTetrominoes, "played");
-			draw();
+			if (!exploded) {
+				draw();
+			} else {
+				setTimeout(draw, 100);
+			}
 			// console.log("not over");
 			changeDifficulty();
 			
@@ -283,7 +347,7 @@ let checkRotationEdges = function() {
 
 	currentRotation++;
 	currentRotation = (currentRotation % 4 + 4) % 4;
-	console.log("rotation", currentRotation);
+	// console.log("rotation", currentRotation);
 	// if (currentRotation == currentTetromino.length) {
 	// 	currentRotation = 0;
 	// }
@@ -370,20 +434,20 @@ let rotate = function() {
 	// console.log(isPositionAvailable, "positionNeutro");
 
 	if (!isPositionAvailable) {
-		console.log("beforeRotaA", currentRotation);
+		// console.log("beforeRotaA", currentRotation);
 		currentRotation--;
 		currentRotation = (currentRotation % 4 + 4) % 4;
-		console.log("beforeRotaB", currentRotation);
+		// console.log("beforeRotaB", currentRotation);
 		// currentRotation--;
 		// if (currentRotation < 0) {
 		// 	currentRotation = 3;
 		// }
 		// console.log(currentRotation, "rotation");
 	}
-	console.log("before", currentTetromino);
-	console.log("beforeRota", currentRotation);
+	// console.log("before", currentTetromino);
+	// console.log("beforeRota", currentRotation);
 	currentTetromino = tetrominoes[random][currentRotation];
-	console.log("after", currentTetromino);
+	// console.log("after", currentTetromino);
 
 	draw();
 }
@@ -400,7 +464,8 @@ const nextTetromino = [
 [5, 6, 9, 10],
 [2, 6, 10, 14],
 [5, 6, 10, 14],
-[5, 6, 10, 11]
+[5, 6, 10, 11],
+[5, 6, 9, 10]
 ];
 
 
@@ -520,7 +585,7 @@ let gameOver = function () {
 		startBtn.style.display = "none";
 		document.getElementById("gameover").style.display = "initial";
 		if (score > 0) {
-			console.log(score);
+			// console.log(score);
 			checkNewHighscore(score);
 		}
 		let topScores = document.getElementsByClassName("highScore");
@@ -618,7 +683,7 @@ startBtn.addEventListener('click', () => {
 		
 		if (!started) {
 			
-			nextRandom = Math.floor(Math.random() * tetrominoes.length);
+			nextRandom = Math.floor(Math.random() * (tetrominoes.length - 1));
 			displayNextTetromino();
 			started = true;
 			resetBtn.style.display = "initial";
@@ -653,7 +718,7 @@ resetBtn.addEventListener("click", function() {
 	startBtn.style.display = "initial";
 	resetBtn.style.display = "none";
 	document.getElementById("gameover").style.display = "none";
-	random = Math.floor(Math.random()*tetrominoes.length);
+	random = Math.floor(Math.random()*(tetrominoes.length - 1));
 	currentTetromino = tetrominoes[random][0];
 	currentPosition = 4;
 	level = 1;
@@ -725,7 +790,7 @@ let getHighscores = function() {
 let checkNewHighscore = function(score) {
 
 	topFive.push(score);
-	console.log(topFive);
+	// console.log(topFive);
 
 	let newHighScore = topFive.sort(function(value1, value2) {
 		if (value1 < value2) {
@@ -736,7 +801,7 @@ let checkNewHighscore = function(score) {
 	});
 
 	newHighScore.pop();
-	console.log(newHighScore);
+	// console.log(newHighScore);
 	window.localStorage.highscores = JSON.stringify(newHighScore);
 
 
@@ -748,7 +813,7 @@ window.addEventListener("load", getHighscores);
 
 
 //ordenar
-//bomba?
+
 
 
 
