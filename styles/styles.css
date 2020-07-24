@@ -170,8 +170,9 @@ h1 {
 	font-size: 34px;
 }
 
-.upNext h3:last-child {
+.upNext h3:last-of-type {
 	margin-top: 0px;
+	/*margin-bottom: 5px;*/
 }
 
 ol {
@@ -223,4 +224,55 @@ footer {
 	letter-spacing: 2px;
 	padding-top: 50px;
 	padding-right: 30px;
+}
+
+/*---------------------*/
+
+h4 {
+	font-size: 28px;
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+
+h5 {
+	margin-top: 0;
+	font-size: 24px;
+}
+
+.combo {
+	display: none;
+}
+
+.newCombo {
+animation: fadeIn ease-out 5s;
+/*-webkit-animation: fadeIn ease 20s;
+-moz-animation: fadeIn ease 20s;
+-o-animation: fadeIn ease 20s;
+-ms-animation: fadeIn ease 20s;*/
+}
+@keyframes fadeIn {
+0% {opacity:0;}
+40% {opacity:1;}
+70% {opacity:1;}
+100% {opacity:0;}
+}
+
+/*@-moz-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}*/
+
+/*@-webkit-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+*/
+@-o-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
 }
