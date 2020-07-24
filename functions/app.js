@@ -491,6 +491,8 @@ let formatNumber = function(num) {
 
 let addScore = function () {
 
+	let rowsCleared = 0;
+
 	for (i = 0; i < 199; i += width) {
 
 		const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
@@ -499,6 +501,7 @@ let addScore = function () {
 
 		if (isRowTaken) {
 			// clearInterval(timer);
+			rowsCleared++;
 			score += 10;
 			scoreDisplay.textContent = formatNumber(score);
 			row.forEach(index => {
@@ -518,6 +521,55 @@ let addScore = function () {
 		}
 		
 	}
+
+	let comboNumber = document.querySelector("h4.combo span");
+	let comboScore = document.querySelector("h5.combo span");;
+
+	if (rowsCleared == 2 && random != 7) {
+
+		console.log("combo");
+		score += 25;
+		scoreDisplay.textContent = formatNumber(score);
+		comboNumber.textContent = 2;
+		comboScore.textContent = 25;
+		animate();
+
+	} else if (rowsCleared == 3) {
+
+		console.log("combo");
+		score += 35;
+		scoreDisplay.textContent = formatNumber(score);
+		comboNumber.textContent = 3;
+		comboScore.textContent = 35;
+		animate();
+
+	} else if (rowsCleared == 4) {
+
+		console.log("combo");
+		score += 45;
+		scoreDisplay.textContent = formatNumber(score);
+		comboNumber.textContent = 4;
+		comboScore.textContent = 45;
+		animate();
+
+	}
+}
+
+function animate() {
+	let combo = Array.from(document.querySelectorAll(".combo"));
+
+	combo.forEach( elm => {
+		elm.style.display = "initial";
+		elm.classList.add("newCombo");
+	});
+
+	setTimeout( function() {
+		combo.forEach( elm => {
+			elm.style.display = "none";
+			elm.classList.remove("newCombo");
+		});
+
+	}, 4980);
 }
 
 
