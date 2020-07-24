@@ -522,38 +522,58 @@ let addScore = function () {
 		
 	}
 
-	let comboNumber = document.querySelector("h4.combo span");
-	let comboScore = document.querySelector("h5.combo span");;
+	let comboNumberDisplay = document.querySelector("h4.combo span");
+	let comboScoreDisplay = document.querySelector("h5.combo span");
 
-	if (rowsCleared == 2 && random != 7) {
+	let comboNumber = [4, 3, 2];
+	let comboScore = [45, 35, 25];
 
-		console.log("combo");
-		score += 25;
-		scoreDisplay.textContent = formatNumber(score);
-		comboNumber.textContent = 2;
-		comboScore.textContent = 25;
-		animate();
+	for (j = 0; j < comboNumber.length; j++) {
+		
+		if (rowsCleared == comboNumber[j] && random != 7) {
 
-	} else if (rowsCleared == 3) {
-
-		console.log("combo");
-		score += 35;
-		scoreDisplay.textContent = formatNumber(score);
-		comboNumber.textContent = 3;
-		comboScore.textContent = 35;
-		animate();
-
-	} else if (rowsCleared == 4) {
-
-		console.log("combo");
-		score += 45;
-		scoreDisplay.textContent = formatNumber(score);
-		comboNumber.textContent = 4;
-		comboScore.textContent = 45;
-		animate();
+			console.log("combo");
+			score += comboScore[j];
+			scoreDisplay.textContent = formatNumber(score);
+			comboNumberDisplay.textContent = comboNumber[j];
+			comboScoreDisplay.textContent = comboScore[j];
+			animate();
+			break;
+		}
 
 	}
+
+	// if (rowsCleared == 2 && random != 7) {
+
+	// 	console.log("combo");
+	// 	score += 25;
+	// 	scoreDisplay.textContent = formatNumber(score);
+	// 	comboNumberDisplay.textContent = 2;
+	// 	comboScoreDisplay.textContent = 25;
+	// 	animate();
+
+	// } else if (rowsCleared == 3) {
+
+	// 	console.log("combo");
+	// 	score += 35;
+	// 	scoreDisplay.textContent = formatNumber(score);
+	// 	comboNumberDisplay.textContent = 3;
+	// 	comboScoreDisplay.textContent = 35;
+	// 	animate();
+
+	// } else if (rowsCleared == 4) {
+
+	// 	console.log("combo");
+	// 	score += 45;
+	// 	scoreDisplay.textContent = formatNumber(score);
+	// 	comboNumberDisplay.textContent = 4;
+	// 	comboScoreDisplay.textContent = 45;
+	// 	animate();
+
+	// }
 }
+
+
 
 function animate() {
 	let combo = Array.from(document.querySelectorAll(".combo"));
