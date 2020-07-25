@@ -4,6 +4,8 @@ const width = 10;
 const scoreDisplay = document.getElementById("score");
 let score = 0;
 const startBtn = document.getElementById("start_button");
+const startBtnText = document.getElementById("startText");
+const startBtnIcon = document.getElementById("startIcon");
 let nextRandom = 0;
 let interval = 1000;
 let playedTetrominoes = 0;
@@ -27,8 +29,8 @@ let createBoard = function () {
 	for (i = 0; i < 21; i++) {
 		for (j = 0; j < 10; j++) {
 			var square = document.createElement("div");
-			square.style.width = "30px";
-			square.style.height = "30px";
+			// square.style.width = "30px";
+			// square.style.height = "30px";
 
 			if (i == 20) {
 				square.classList.add("taken");
@@ -282,23 +284,30 @@ let freeze = function() {
 
 let moveDown = function () {
 	// console.log(over);
+	if(over) {
+		return;
+	}
 
 	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
 	// console.log(isPositionAvailable, "positionrot");
 	// console.log(over)
 
-	if(!over && !isPositionTaken) {
+	if(!isPositionTaken) {
 		undraw();
 		currentPosition += width;
 		// console.log(currentPosition);
 		draw();
-		freeze();
-	} else if (!over && isPositionTaken) {
-		freeze();
 	}
+
+	freeze();
+	
 }
 
 let moveLeft = function () {
+
+	if(over) {
+		return;
+	}
 
 
 	let isAtLeftEdge = currentTetromino.some(index => (currentPosition + index) % width === 0);
@@ -318,6 +327,9 @@ let moveLeft = function () {
 
 let moveRight = function () {
 
+	if(over) {
+		return;
+	}
 
 	let isAtRightEdge = currentTetromino.some(index => (currentPosition + index) % width === width - 1);
 
@@ -426,6 +438,10 @@ let checkPosition = function() {
 
 
 let rotate = function() {
+
+	if(over) {
+		return;
+	}
 
 	undraw();
 	checkRotationEdges();
@@ -697,46 +713,69 @@ let gameOver = function () {
 
 
 
+// let controls = function (event) {
+
+// 	if (!over) {
+
+// 		if (event.keyCode === 37) {
+// 			// moveLeft();
+
+// 		} else if (event.keyCode === 38) {
+// 			// rotate();
+
+// 		} else if (event.keyCode === 39) {
+// 			// moveRight();
+
+// 		} else if (event.keyCode === 40) {
+// 			// moveDown();
+// 		}
+// 	}
+// }
+
 let controls = function (event) {
 
-	if (!over) {
+	// if (!over) {
 
 		if (event.keyCode === 37) {
+			event.preventDefault();
 			moveLeft();
 
 		} else if (event.keyCode === 38) {
+			event.preventDefault();
 			rotate();
 
 		} else if (event.keyCode === 39) {
+			event.preventDefault();
 			moveRight();
 
 		} else if (event.keyCode === 40) {
+			event.preventDefault();
 			moveDown();
 		}
-	}
-}
-
-let avoidScrolling = function (event) {
-
-	if (event.keyCode === 37) {
-		event.preventDefault();
-
-	} else if (event.keyCode === 38) {
-		event.preventDefault();
-
-	} else if (event.keyCode === 39) {
-		event.preventDefault();
-
-	} else if (event.keyCode === 40) {
-		event.preventDefault();
-	}
+	// }
 }
 
 let started = false;
 let resetBtn = document.getElementById("reset");
 
-document.addEventListener('keyup', controls);
-window.addEventListener('keydown', avoidScrolling);
+document.addEventListener('keydown', controls);
+// window.addEventListener('keydown', avoidScrolling);
+
+
+let addButtonControls = function() {
+
+	let arrows = Array.from(document.querySelectorAll(".controls button"));
+	let actions = [rotate, moveDown, moveLeft, moveRight];
+
+	// arrows[0].addEventListener('click', rotate);
+	for (var i = 0; i < arrows.length; i++) {
+		arrows[i].addEventListener('click', actions[i]);
+	}
+
+
+}
+
+addButtonControls();
 
 
 
@@ -744,13 +783,17 @@ let audio = document.getElementById("music");
 audio.volume = 0.1;
 let musicBtn = document.getElementById("musicBtn");
 
+
+
 startBtn.addEventListener('click', () => {
 
 	if (timer) {
 		clearInterval(timer);
 		timer = null;
 		over = true;
-		startBtn.textContent = "START";
+		// startBtn.textContent = "START";
+		startBtnText.textContent = "START";
+		startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
 	} else {
 		
 		if (!started) {
@@ -770,7 +813,9 @@ startBtn.addEventListener('click', () => {
 		over = false;
 		draw();
 		timer = setInterval(moveDown, interval);
-		startBtn.textContent = "PAUSE";
+		// startBtn.textContent = "PAUSE";
+		startBtnText.textContent = "PAUSE";
+		startBtnIcon.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
 
 	}
 });
@@ -786,7 +831,9 @@ resetBtn.addEventListener("click", function() {
 	document.getElementById("level").textContent = "1";
 	started = false;
 	over = true;
-	startBtn.textContent = "START";
+	// startBtn.textContent = "START";
+	startBtnText.textContent = "START";
+	startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
 	startBtn.style.display = "initial";
 	resetBtn.style.display = "none";
 	document.getElementById("gameover").style.display = "none";
