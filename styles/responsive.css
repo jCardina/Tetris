@@ -1,0 +1,45 @@
+@media only screen
+and (max-width: 999px) {
+
+	.columnC {
+		padding: 0;
+	}
+
+
+}
+
+
+@media only screen
+and (max-width: 890px) {
+/*
+	h1 {
+		font-size: 68px;
+	}
+
+
+	h2 {
+		font-size: 46px;
+	}
+
+	h3 {
+		font-size: 34px;
+	}
+
+	h4 {
+		font-size: 24px;
+	}
+
+	h5 {
+		font-size: 20px;
+	}
+
+
+	.upNext h3:nth-child(3) {
+		font-size: 30px;
+	}*/
+	ol {
+		margin-left: 0px;
+		/*font-size: 28px;*/
+	}
+
+}
