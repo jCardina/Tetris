@@ -1,5 +1,50 @@
 
 @media only screen
+and (max-width: 1024px)
+and (orientation: portrait)
+and (hover:none) {
+
+
+	.columnC {
+		padding: 0;
+	}
+
+	.grid {
+		max-width: 550px;
+		min-width: 550px;
+		height: 1100px;
+	}
+
+	.grid div {
+		height: 55px;
+		width: 55px;
+	}
+
+	.tetromino {
+		box-shadow: inset -4px -4px 0 0 rgba(171, 178, 179,0.4), inset 4px 4px 0 0 rgba(255, 255, 255, 0.5);
+		border-radius: 8px;
+	}
+
+	.start {
+		font-size: 0px;
+	}
+
+	footer {
+		position: absolute;
+		top: calc(100vh - 100px);
+		left: calc(100% - 270px);
+	}
+
+	h1 {
+		margin-top: 20px;
+		margin-bottom: 30px;
+		font-size: 9.625vw;
+	}
+
+}
+
+
+@media only screen
 and (max-width: 999px)
 and (hover:none) {
 
@@ -45,10 +90,10 @@ and (max-width: 890px) {
 
 	.upNext h3:nth-child(3) {
 		font-size: 30px;
-	}*/
-	ol {
-		margin-left: 0px;
-		/*font-size: 28px;*/
-	}
+		}*/
+		ol {
+			margin-left: 0px;
+			/*font-size: 28px;*/
+		}
 
-}
+	}
