@@ -9,6 +9,11 @@
 	border-radius: 4px;
 }
 
+.grid div {
+	width: 30px;
+	height: 30px;
+}
+
 .tetromino {
 	box-shadow: inset -2px -2px 0 0 rgba(171, 178, 179,0.4), inset 2px 2px 0 0 rgba(255, 255, 255, 0.5);
 	border-radius: 4px;
@@ -267,7 +272,7 @@ animation: fadeIn ease-out 5s;
 100% {opacity:1;}
 }
 */
-@-o-keyframes fadeIn {
+/*@-o-keyframes fadeIn {
 0% {opacity:0;}
 100% {opacity:1;}
 }
@@ -275,7 +280,7 @@ animation: fadeIn ease-out 5s;
 @-ms-keyframes fadeIn {
 0% {opacity:0;}
 100% {opacity:1;}
-}
+}*/
 
 .controls {
 	position: fixed;
@@ -288,7 +293,7 @@ animation: fadeIn ease-out 5s;
 }
 
 #left-right {
-	left: calc(100% - 5% - 100px);
+	left: calc(95% - 100px);
 }
 
 
