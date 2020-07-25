@@ -276,3 +276,29 @@ animation: fadeIn ease-out 5s;
 0% {opacity:0;}
 100% {opacity:1;}
 }
+
+.controls {
+	position: fixed;
+	top: calc(100vh - 80px);
+}
+
+#up-down {
+	/*top: 450px;*/
+	left: 5%;
+}
+
+#left-right {
+	left: calc(100% - 5% - 100px);
+}
+
+
+.controls button{
+	height: 50px;
+	width: 50px;
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 50%;
+	border: 0px;
+	font-size: 24px; 
+	outline: 0;
+}
+
