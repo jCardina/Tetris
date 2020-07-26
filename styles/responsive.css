@@ -318,7 +318,8 @@ and (orientation: portrait)
 
 	.controls {
 		/*top: calc(100% - 134px);*/
-		top: 508px;
+		/*top: 508px;*/
+		top: 8px;
 	}
 
 
@@ -328,7 +329,8 @@ and (orientation: portrait)
 
 	#up-down {
 		/*top: calc(100% - 184px);*/
-		top: 458px;
+		/*top: 458px;*/
+		top: -40px;
 		left: 6%;
 		width: 40px;
 	}
