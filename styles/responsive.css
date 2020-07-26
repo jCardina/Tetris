@@ -276,6 +276,10 @@ and (hover:none) {
 		margin-bottom: 5px;
 	}
 
+	.upNext h3:last-of-type {
+		text-align: center;
+	}
+
 	#musicBtn {
 		width: 30px;
 		height: 30px;
@@ -299,7 +303,8 @@ and (hover:none) {
 	}
 
 	.controls {
-		top: calc(100% - 134px);
+		/*top: calc(100% - 134px);*/
+		top: 508px;
 	}
 
 
@@ -308,7 +313,8 @@ and (hover:none) {
 	}
 
 	#up-down {
-		top: calc(100% - 184px);
+		/*top: calc(100% - 184px);*/
+		top: 458px;
 		left: 6%;
 		width: 40px;
 	}
