@@ -48,8 +48,8 @@ let createDisplay = function () {
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
 			var square = document.createElement("div");
-			square.style.width = "30px";
-			square.style.height = "30px";
+			// square.style.width = "30px";
+			// square.style.height = "30px";
 
 
 			document.getElementById("preview").appendChild(square);
@@ -932,6 +932,8 @@ window.addEventListener("load", getHighscores);
 
 
 //ordenar
+
+//desactivar tecla abajo mientras efecto bomba
 
 
 
