@@ -1,5 +1,6 @@
 @media only screen
-and (hover:none) {
+and (hover: none)
+and (pointer: coarse) {
 	.controls {
 		display: initial;
 	}
