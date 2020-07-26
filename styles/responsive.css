@@ -299,17 +299,18 @@ and (hover:none) {
 	}
 
 	.controls {
-		top: calc(100vh - 108px);
+		top: calc(100vh - 134px);
 	}
 
 
 	#left-right {
-		left: calc(95% - 150px);
+		left: calc(95% - 100px);
 	}
 
 	#up-down {
-		top: calc(100vh - 132px);
-		left: 23%;
+		top: calc(100vh - 184px);
+		left: 6%;
+		width: 40px;
 	}
 
 }
