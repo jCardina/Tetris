@@ -9,7 +9,7 @@
 	border-radius: 4px;
 }
 
-.grid div {
+.grid div, .mini-grid div {
 	width: 30px;
 	height: 30px;
 }
@@ -31,6 +31,8 @@
 	padding: 12px;
 	
 }
+
+
 
 body {
 	background: rgb(174,225,238);
@@ -117,6 +119,10 @@ h3 {
 	margin-bottom: 30px;
 	border-radius: 16px;
 
+}
+
+#startIcon, #resetIcon {
+	display: none;
 }
 
 .start:hover {
@@ -284,26 +290,38 @@ animation: fadeIn ease-out 5s;
 
 .controls {
 	position: fixed;
-	top: calc(100vh - 80px);
+	top: calc(100vh - 110px);
+	display: none;
 }
+
 
 #up-down {
 	/*top: 450px;*/
-	left: 5%;
+	left: 8%;
+	width: 70px;
+	top: calc(100vh - 200px);
+}
+
+#up-down button:first-child {
+	margin-bottom: 20px;
 }
 
 #left-right {
-	left: calc(95% - 100px);
+	left: calc(95% - 150px);
+}
+
+#left-right button:first-child {
+	margin-right: 20px;
 }
 
 
 .controls button{
-	height: 50px;
-	width: 50px;
+	height: 70px;
+	width: 70px;
 	background-color: rgba(0, 0, 0, 0.1);
 	border-radius: 50%;
 	border: 0px;
-	font-size: 24px; 
+	font-size: 34px; 
 	outline: 0;
 }
 
