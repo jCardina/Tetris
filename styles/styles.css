@@ -290,7 +290,7 @@ animation: fadeIn ease-out 5s;
 
 .controls {
 	position: fixed;
-	top: calc(100vh - 110px);
+	top: calc(100% - 110px);
 	display: none;
 }
 
@@ -299,7 +299,7 @@ animation: fadeIn ease-out 5s;
 	/*top: 450px;*/
 	left: 8%;
 	width: 70px;
-	top: calc(100vh - 200px);
+	top: calc(100% - 200px);
 }
 
 #up-down button:first-child {

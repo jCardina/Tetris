@@ -299,7 +299,7 @@ and (hover:none) {
 	}
 
 	.controls {
-		top: calc(100vh - 134px);
+		top: calc(100% - 134px);
 	}
 
 
@@ -308,7 +308,7 @@ and (hover:none) {
 	}
 
 	#up-down {
-		top: calc(100vh - 184px);
+		top: calc(100% - 184px);
 		left: 6%;
 		width: 40px;
 	}
