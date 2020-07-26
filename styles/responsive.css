@@ -19,7 +19,9 @@ and (pointer: coarse) {
 @media only screen
 and (max-width: 1024px)
 and (orientation: portrait)
-and (hover:none) {
+/*and (hover:none)*/
+/*and (pointer: coarse) {*/
+	{
 
 
 
@@ -115,7 +117,12 @@ and (hover:none) {
 
 @media only screen
 and (max-width: 999px)
-and (hover:none) {
+and (hover:hover)
+and (pointer: fine) {
+
+	h1 {
+		/*font-size: 60px;*/
+	}
 
 
 }
@@ -142,9 +149,10 @@ and (max-width: 890px) {
 
 }
 
-@media only screen
+/*@media only screen
 and (max-width: 768px)
-and (hover:hover) {
+and (hover:hover)
+and (pointer: fine) {
 
 	body {
 		min-width: 768px;
@@ -154,15 +162,16 @@ and (hover:hover) {
 		left: 708px;
 	}
 
-	/*arreglar font sizes*/
+	/*arreglar font sizes
 
-}
+}*/
 
 
 @media only screen
 and (max-width: 412px)
 and (orientation: portrait)
-and (hover:none) {
+/*and (hover:none) */
+{
 
 	.grid {
 		max-width: 200px;

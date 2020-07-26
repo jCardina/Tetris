@@ -288,8 +288,12 @@ animation: fadeIn ease-out 5s;
 100% {opacity:1;}
 }*/
 
+/*.controlsCont {
+	position: 
+}*/
+
 .controls {
-	position: fixed;
+	position: absolute;
 	top: calc(100% - 110px);
 	display: none;
 }
