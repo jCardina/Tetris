@@ -291,12 +291,12 @@ animation: fadeIn ease-out 5s;
 .controlsCont {
 	position: relative;
 	height: 90px;
+	display: none;
 }
 
 .controls {
 	position: absolute;
 	/*top: calc(100% - 110px);*/
-	display: none;
 }
 
 

@@ -1,8 +1,8 @@
 @media only screen
 and (hover: none)
 and (pointer: coarse) {
-	.controls {
-		display: initial;
+	.controlsCont {
+		display: block;
 	}
 
 	.controls button:active {
@@ -19,9 +19,9 @@ and (pointer: coarse) {
 @media only screen
 and (max-width: 1024px)
 and (orientation: portrait)
-/*and (hover:none)*/
-/*and (pointer: coarse) {*/
-	{
+and (hover:none)
+and (pointer: coarse) {
+	
 
 
 
@@ -169,7 +169,7 @@ and (pointer: fine) {
 
 @media only screen
 and (max-width: 412px)
-and (orientation: portrait)
+/*and (orientation: portrait)*/
 /*and (hover:none) */
 {
 
