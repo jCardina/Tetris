@@ -10,20 +10,35 @@ and (pointer: coarse) {
 		color: #FFFFFF;
 	}
 
-	/*sacar hovers*/
+	/*add buttons hover none / HD screens / landscape mobile orientation*/
 
 
 }
 
 
 @media only screen
-and (max-width: 1024px)
-/*and (orientation: portrait)*/
-/*and (hover:none)*/
-/*and (pointer: coarse)*/ {
-	
+and (max-width: 1024px) {
 
+	/*fix font size*/
 
+	h1 {
+		margin-top: 20px;
+		margin-bottom: 30px;
+		font-size: 9.625vw;
+	}
+
+	h2 {
+		white-space: nowrap;
+	}
+
+	.columnC {
+		padding: 0 10px 0 10px;
+	}
+
+	div.firstC {
+		min-width: 217px;
+		padding-right: 10px;
+	}
 
 	.grid {
 		max-width: 350px;
@@ -39,11 +54,7 @@ and (max-width: 1024px)
 	.grid .tetromino {
 		box-shadow: inset -4px -4px 0 0 rgba(171, 178, 179,0.4), inset 4px 4px 0 0 rgba(255, 255, 255, 0.5);
 		border-radius: 8px;
-	}
-
-	h2 {
-		white-space: nowrap;
-	}
+	}	
 
 	.start {
 		min-width: 80px;
@@ -78,52 +89,16 @@ and (max-width: 1024px)
 		display: none;
 	}
 
+	div.upNext {
+		min-width: 227px;
+	}
+
 	footer {
 		position: absolute;
 		top: calc(100vh - 100px);
 		left: calc(100% - 270px);
 		z-index: -1;
 	}
-
-	h1 {
-		margin-top: 20px;
-		margin-bottom: 30px;
-		font-size: 9.625vw;
-	}
-
-	.columnC {
-		/*justify-content: flex-start;*/
-		padding: 0 10px 0 10px;
-	}
-
-	.columnC > div {
-		/*width: initial;*/
-	}
-
-
-	div.upNext {
-		min-width: 227px;
-	}
-
-	div.firstC {
-		min-width: 217px;
-		padding-right: 10px;
-	}
-
-
-
-}
-
-
-@media only screen
-and (max-width: 999px)
-and (hover:hover)
-and (pointer: fine) {
-
-	h1 {
-		/*font-size: 60px;*/
-	}
-
 
 }
 
@@ -135,43 +110,11 @@ and (max-width: 999px) {
 		padding: 0;
 	}
 
-
 }
 
 
 @media only screen
-and (max-width: 890px) {
-
-	ol {
-		margin-left: 0px;
-		/*font-size: 28px;*/
-	}
-
-}
-
-/*@media only screen
-and (max-width: 768px)
-and (hover:hover)
-and (pointer: fine) {
-
-	body {
-		min-width: 768px;
-	}
-
-	#musicBtn {
-		left: 708px;
-	}
-
-	/*arreglar font sizes
-
-}*/
-
-
-@media only screen
-and (max-width: 915px)
-/*and (orientation: portrait)*/
-/*and (hover:none) */
-{
+and (max-width: 915px) {
 
 	.grid {
 		max-width: 350px;
@@ -335,6 +278,16 @@ and (max-width: 915px)
 		top: -40px;
 		left: 6%;
 		width: 40px;
+	}
+
+}
+
+
+@media only screen
+and (max-width: 890px) {
+
+	ol {
+		margin-left: 0px;
 	}
 
 }

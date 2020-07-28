@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 	<title>Basic Tetris</title>
 
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<!-- add meta -->
 
 	<link rel="shortcut icon" type="image/png" href="./images/logo.png"/>
 
@@ -12,50 +16,63 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
-
 	<link rel="stylesheet" type="text/css" href="./styles/styles.css"/>
 	<link rel="stylesheet" type="text/css" href="./styles/responsive.css"/>
 
 </head>
+
 <body>
-	<button id="musicBtn" class="paused stopped"><i class="fa fa-music" aria-hidden="true"></i></button>
-	
-	<h1>TETRIS</h1>
 
-	<div class="columnC">
+	<main>
 
-		<div class="firstC">
-			<h2 id="gameover">GAME OVER</h2>
-			<button id="start_button" class="start"><span id="startIcon"><i class="fa fa-play" aria-hidden="true"></i></span><span id="startText">START</span></button>
+		<button id="musicBtn" class="paused stopped"><i class="fa fa-music" aria-hidden="true"></i></button>
 
-			<button id="reset"><span id="resetIcon"><i class="fa fa-refresh" aria-hidden="true"></i></span><span id="resetText">NEW GAME</span></button>
+		<h1>TETRIS</h1>
 
-			<div id="highScoreTable">
-				<h3>HIGH SCORES</h3>
-				<ol id="table">
-					<li class="highScore"></li>
-					<li class="highScore"></li>
-					<li class="highScore"></li>
-					<li class="highScore"></li>
-					<li class="highScore"></li>
-				</ol>
+		<div class="columnC">
+
+			<div class="firstC">
+
+				<h2 id="gameover">GAME OVER</h2>
+
+				<button id="start_button" class="start"><span id="startIcon"><i class="fa fa-play" aria-hidden="true"></i></span><span id="startText">START</span></button>
+
+				<button id="reset"><span id="resetIcon"><i class="fa fa-refresh" aria-hidden="true"></i></span><span id="resetText">NEW GAME</span></button>
+
+				<div id="highScoreTable">
+
+					<h3>HIGH SCORES</h3>
+
+					<ol id="table">
+						<li class="highScore"></li>
+						<li class="highScore"></li>
+						<li class="highScore"></li>
+						<li class="highScore"></li>
+						<li class="highScore"></li>
+					</ol>
+
+				</div>
+
 			</div>
-			
-		</div>
 
-		<div class="gridCont">
-			<div class="grid" id="container"></div>
-
-		</div>
+			<div class="gridCont">
+				<div class="grid" id="container"></div>
+			</div>
 
 
-		<div class="upNext">
-			<h3>NEXT</h3>
-			<div class="mini-grid" id="preview"></div>
-			<h3>LEVEL <span id="level">1</span></h3>
+			<div class="upNext">
+
+				<h3>NEXT</h3>
+
+				<div class="mini-grid" id="preview"></div>
+
+				<h3>LEVEL <span id="level">1</span></h3>
+
 				<h3>SCORE: <span id="score">0</span></h3>
+
 				<h4 class="combo">COMBO X<span></span></h4>
 				<h5 class="combo">+<span></span></h5>
+
 			</div>
 
 		</div>
@@ -63,30 +80,30 @@
 		<div class="controlsCont">
 
 			<div class="controls" id="up-down">
+
 				<button id="up"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 				<button id="down"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+
 			</div>
 
 			<div class="controls" id="left-right">
+
 				<button id="left"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
 				<button id="right"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+
 			</div>
 
 		</div>
 
+	</main>
 
+	<footer>
+		<p>Music: https://www.bensound.com</p>
+	</footer>
 
+	<audio id="music" src="./music/bensound-endlessmotion.mp3"></audio>
 
-		<audio id="music" src="./music/bensound-endlessmotion.mp3">
-		</audio>
-
-		<footer>
-			<p>Music: https://www.bensound.com</p>
-		</footer>
-
-
-		<script src="./functions/app.js"></script>
-	</body>
-	</html>
-
-<!-- secciones y meta -->
+	<script src="./functions/app.js"></script>
+	
+</body>
+</html>
