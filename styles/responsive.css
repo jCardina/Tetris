@@ -36,12 +36,16 @@ and (max-width: 1024px) {
 	}
 
 	div.firstC {
-		min-width: 217px;
+		min-width: 200px;
 		padding-right: 10px;
 	}
 
+	.gridCont {
+		min-width: 400px;
+	}
+
 	.grid {
-		max-width: 350px;
+		max-width: 400px;
 		min-width: 400px;
 		height: 800px;
 	}
@@ -90,7 +94,6 @@ and (max-width: 1024px) {
 	}
 
 	div.upNext {
-		min-width: 227px;
 	}
 
 	footer {
@@ -112,13 +115,14 @@ and (max-width: 999px) {
 	}
 
 	h2 {
-		font-size: 46px;
+		font-size: 42px;
 		text-align: center;
 		white-space: normal;
 	}
 
 	h3 {
 		margin-top: 25px;
+		font-size: 36px;
 	}
 
 	.columnC {
@@ -129,7 +133,7 @@ and (max-width: 999px) {
 
 
 @media only screen
-and (max-width: 915px) {
+and (max-width: 920px) {
 
 	/*h1 {
 		font-size: 34px;
@@ -143,41 +147,41 @@ and (max-width: 915px) {
 
 	h3 {
 		margin-top: 25px;
-	}*/
+		}*/
 
 
-	#musicBtn {
-		width: 30px;
-		height: 30px;
-		font-size: 16px;
-		top: 12px;
-		left: calc(100% - 42px);
-	}
+		#musicBtn {
+			width: 30px;
+			height: 30px;
+			font-size: 16px;
+			top: 12px;
+			left: calc(100% - 42px);
+		}
 
-	.columnC {
-		padding: 0 5px 0 5px;
-	}
+		.columnC {
+			padding: 0 5px 0 5px;
+		}
 
-	div.firstC {
-		padding-top: 55px;
-		min-width: 73px;
-		padding-right: 5px;
-		/*max-width: 165px;*/
-	}
+		div.firstC {
+			padding-top: 55px;
+			min-width: 73px;
+			padding-right: 5px;
+			/*max-width: 165px;*/
+		}
 
-	.start {
-		min-width: 50px;
+		.start {
+		/*min-width: 50px;
 		height: 50px;
-		font-size: 18px;
+		font-size: 18px;*/
 		margin-bottom: 20px;
 	}
 
 	#reset {
-		height: 30px;
+		/*height: 30px;
 		min-width: 30px;
 		max-width: 30px;
 		font-size: 16px;
-		line-height: 16px;
+		line-height: 16px;*/
 	}
 
 	#highScoreTable h3 {
@@ -193,7 +197,7 @@ and (max-width: 915px) {
 	}
 
 	.gridCont {
-		min-width: 200px;
+		min-width: 350px;
 	}
 
 	.grid {
@@ -275,7 +279,7 @@ and (max-width: 915px) {
 	}
 
 	footer {
-		font-size: 8px;
+		font-size: 10px;
 		/*top: calc(100vh - 86px);
 		left: calc(100% - 204px);*/
 	}
@@ -286,8 +290,28 @@ and (max-width: 915px) {
 @media only screen
 and (max-width: 890px) {
 
+	h1 {
+		font-size: 60px;
+	}
+
+	h2 {
+		font-size: 42px;
+		text-align: center;
+		white-space: normal;
+	}
+
+	h3 {
+		margin-top: 25px;
+		font-size: 32px;
+	}
+
 	ol {
-		margin-left: 0px;
+		/*margin-left: 0px;*/
+		/*width: 54px;
+		padding-left: 30px;
+		margin-right: 5px;
+		font-size: 12px;*/
+		font-size: 23px;
 	}
 
 	.firstC, .upNext {
@@ -296,9 +320,22 @@ and (max-width: 890px) {
 
 }
 
+@media only screen
+and (max-width: 830px) {
+
+	.firstC, .upNext {
+		max-width: 220px;
+	}
+
+}
+
 
 @media only screen
 and (max-width: 680px) {
+
+	.gridCont {
+		min-width: 250px;
+	}
 
 	.grid {
 		max-width: 250px;
@@ -311,11 +348,57 @@ and (max-width: 680px) {
 		height: 25px;
 		width: 25px;
 	}
+
+	h2 {
+		font-size: 38px;
+	}
 }
 
 
 @media only screen
 and (max-width: 564px) {
+
+	h1 {
+		font-size: 40px;
+		text-indent: 24px;
+	}
+
+	h2 {
+		font-size: 30px;
+	}
+
+	h3 {
+		font-size: 24px;
+	}
+
+	.upNext h3:nth-child(3) {
+		font-size: 22px;
+	}
+
+	h4 {
+		font-size: 20px;
+	}
+
+	h5 {
+		font-size: 18px;
+	}
+
+	ol {
+		font-size: 18px;
+		padding-left: 20px;
+		margin: 0 10px 0 5px;
+	}
+
+
+
+	div.firstC {
+		padding-top: 20px;
+	}
+
+
+	.gridCont {
+		min-width: 200px;
+	}
 
 	.grid {
 		max-width: 200px;
@@ -329,17 +412,59 @@ and (max-width: 564px) {
 		width: 20px;
 	}
 
+	.start {
+		min-width: 50px;
+		height: 50px;
+		font-size: 18px;
+		
+	}
+
+	#reset {
+		height: 30px;
+		min-width: 30px;
+		max-width: 30px;
+		font-size: 16px;
+		line-height: 16px;
+		text-indent: 1px;
+	}
+
 }
 
 
 @media only screen
 and (max-width: 400px) {
 
+	h1 {
+		margin-bottom: 10px;
+	}
+
+
+	h2 {
+		font-size: 26px;
+	}
+
+	h3 {
+		font-size: 18px;
+	}
+
+	.upNext h3:nth-child(3) {
+		font-size: 14px;
+	}
+
+	h4 {
+		font-size: 14px;
+	}
+
+	h5 {
+		font-size: 13px;
+	}
+
 	.mini-grid {
 		padding: 0;
 	}
 
 	ol {
-		padding-left: 20px;
+		font-size: 16px;
+		/*padding-left: 20px;*/
 	}
 }
