@@ -198,7 +198,7 @@ let setBomb = function(grid) {
 	//clear the two rows where the bomb is and add "flash"
 	for (i = line; i < (line + 20); i ++) {
 
-		squares[i].style.backgroundColor = "#f3fffe87";
+		squares[i].style.backgroundColor = "rgba(243, 255, 254, 0.53)";
 		squares[i].classList.remove("taken", "tetromino");
 	}
 
