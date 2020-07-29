@@ -2,6 +2,7 @@
 // -----GLOBAL VARIABLES-----//
 
 let timer;
+let started = false;
 let over = true;
 let score = 0;
 let playedTetrominoes = 0;
@@ -11,12 +12,15 @@ let interval = 1000;
 let currentPosition = 4;
 let currentRotation = 0;
 let topFive = [0, 0, 0, 0, 0];
+let songPlaying = 0;
 
-const grid = document.querySelector("#container");
 const scoreDisplay = document.getElementById("score");
 const startBtn = document.getElementById("start_button");
 const startBtnIcon = document.getElementById("startIcon");
 const startBtnText = document.getElementById("startText");
+const resetBtn = document.getElementById("reset");
+const audio = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
 
 const width = 10;
 const colors = [
@@ -182,12 +186,14 @@ let changeDifficulty = function() {
 }
 
 
-let setBomb = function() {
+let setBomb = function(grid) {
 
 	//round position of top left corner to lowest 10 to locate rows to be affected
 	let position = currentTetromino[0] + currentPosition;
 	let line = Math.floor(position / 10) * 10;
 
+	//disable controls to avoid glitches with animation
+	over = true;
 
 	//clear the two rows where the bomb is and add "flash"
 	for (i = line; i < (line + 20); i ++) {
@@ -216,6 +222,9 @@ let setBomb = function() {
 
 		timer = setInterval(moveDown, interval);
 
+		//enable controls
+		over = false;
+
 	}, 90);
 
 	score +=20;
@@ -237,8 +246,178 @@ let displayNextTetromino = function() {
 	});
 }
 
+let addScore = function(grid) {
+
+	let rowsCleared = 0;
+
+	for (i = 0; i < 199; i += width) {
+
+		const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
+
+		let isRowTaken = row.every(index => squares[index].classList.contains("taken"));
+
+		if (isRowTaken) {
+
+			rowsCleared++;
+			score += 10;
+			scoreDisplay.textContent = formatNumber(score);
+
+			row.forEach(index => {
+				squares[index].classList.remove("taken", "tetromino");
+				squares[index].style.backgroundColor = "transparent";
+			});
+
+			//remove completed row and add it at the beginning
+			const squaresRemoved = squares.splice(i, width);
+			squares = squaresRemoved.concat(squares);
+
+			squares.forEach(square => {
+				grid.appendChild(square);
+			});
+		}
+	}
+
+	let comboNumberDisplay = document.querySelector("h4.combo span");
+	let comboScoreDisplay = document.querySelector("h5.combo span");
+
+	let comboNumber = [4, 3, 2];
+	let comboScore = [45, 35, 25];
+
+	//check if two or more rows were cleared together and add bonus points
+	for (j = 0; j < comboNumber.length; j++) {
+		
+		if (rowsCleared == comboNumber[j] && random != 7) {
+
+			score += comboScore[j];
+			scoreDisplay.textContent = formatNumber(score);
+			comboNumberDisplay.textContent = comboNumber[j];
+			comboScoreDisplay.textContent = comboScore[j];
+			animate();
+			break;
+		}
+	}
+}
+
+
+let checkNewHighscore = function(score) {
+
+	topFive.push(score);
+
+	topFive.sort(function(value1, value2) {
+		if (value1 < value2) {
+			return 1;
+		} else {
+			return -1;
+		}
+	});
+
+	topFive.pop();
+
+	window.localStorage.highscores = JSON.stringify(topFive);
+}
+
+
+let getHighscores = function() {
+
+	if (window.localStorage.highscores) {
+
+		topFive = JSON.parse(window.localStorage.getItem("highscores"));
+
+	} else {
+		window.localStorage.setItem("highscores", JSON.stringify(topFive));
+	}
+}
+
+
+let adjustFinalTetromino = function() {
+
+	//copy tetromino array
+	let adjustedTetro = currentTetromino.slice(0);
+
+	//move tetromino up one row
+	for (j = 0; j < adjustedTetro.length; j++) {
+		adjustedTetro[j] -= width;
+	}
+
+	//remove squares with a negative index (outside the grid)
+	adjustedTetro = adjustedTetro.filter(function(x){
+		return x > -1 }
+		);
+
+	//check if tetromino can be displayed in the new position and move up one row
+	for (i = 0; i < 3; i++) {
+
+		let isNewPositionTaken = adjustedTetro.some(index => squares[currentPosition + index].classList.contains("taken"));
+
+		if (isNewPositionTaken) {
+
+			for (z = 0; z < adjustedTetro.length; z++) {
+				adjustedTetro[z] -= width;
+			}
+
+			adjustedTetro = adjustedTetro.filter(function(x){
+				return x > -1 }
+				);
+		} else {
+			
+			return adjustedTetro;
+		}
+	}
+}
+
+
+let gameOver = function() {
+
+	//check if final tetromino can be displayed completely
+	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
+
+	let isFirstRow = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
+
+	
+	if (isPositionTaken || isFirstRow) {
+
+		clearInterval(timer);
+		over = true;
+		startBtn.style.display = "none";
+		document.getElementById("gameover").style.display = "initial";
+		
+		if (score > 0) {
+			checkNewHighscore(score);
+		}
+
+		let topScores = document.getElementsByClassName("highScore");
+
+		for (i = 0; i < topScores.length; i++) {
+			topScores[i].textContent = formatNumber(topFive[i]);
+		}
+
+		document.getElementById("highScoreTable").style.display = "initial";
+	}
+
+
+	if (!isPositionTaken && isFirstRow) {
+		draw();
+	}
+
+	//move up and cut final tetromino if it doesn't fit
+	if (isPositionTaken && isFirstRow) {
+
+		let adjusted = adjustFinalTetromino();
+
+		adjusted.forEach(index => {
+
+			let squareToDraw = squares[currentPosition + index];
+
+			squareToDraw.classList.add("tetromino", "taken");
+			squareToDraw.style.backgroundColor = colors[random];
+		});
+	}
+}
+
 
 let freeze = function() {
+
+	const grid = document.querySelector("#container");
 
 	let isNextRowTaken = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
 
@@ -254,14 +433,14 @@ let freeze = function() {
 	let exploded = false;
 
 	if (random == 7) {
-		setBomb();
+		setBomb(grid);
 		exploded = true;
 	}
 
 	random = nextRandom;
 
 	//set bomb as next tetromino each level change from level 6 onwards
-	if (playedTetrominoes > 48 && (playedTetrominoes + 1) % 10 === 0) {
+	if (playedTetrominoes > 8 && (playedTetrominoes + 1) % 10 === 0) {
 		nextRandom = 7;
 	} else {
 		nextRandom = Math.floor(Math.random() * (tetrominoes.length - 1));
@@ -272,7 +451,7 @@ let freeze = function() {
 
 	displayNextTetromino();
 
-	addScore();
+	addScore(grid);
 	currentPosition = 4;
 
 	gameOver();
@@ -456,194 +635,8 @@ let animate = function() {
 }
 
 
-let addScore = function() {
+let controls = function(event) {
 
-	let rowsCleared = 0;
-
-	for (i = 0; i < 199; i += width) {
-
-		const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9];
-
-		let isRowTaken = row.every(index => squares[index].classList.contains("taken"));
-
-		if (isRowTaken) {
-
-			rowsCleared++;
-			score += 10;
-			scoreDisplay.textContent = formatNumber(score);
-
-			row.forEach(index => {
-				squares[index].classList.remove("taken", "tetromino");
-				squares[index].style.backgroundColor = "transparent";
-			});
-
-			//remove completed row and add it at the beginning
-			const squaresRemoved = squares.splice(i, width);
-			squares = squaresRemoved.concat(squares);
-
-			squares.forEach(square => {
-				grid.appendChild(square);
-			});
-		}
-	}
-
-	let comboNumberDisplay = document.querySelector("h4.combo span");
-	let comboScoreDisplay = document.querySelector("h5.combo span");
-
-	let comboNumber = [4, 3, 2];
-	let comboScore = [45, 35, 25];
-
-	//check if two or more rows were cleared together and add bonus points
-	for (j = 0; j < comboNumber.length; j++) {
-		
-		if (rowsCleared == comboNumber[j] && random != 7) {
-
-			score += comboScore[j];
-			scoreDisplay.textContent = formatNumber(score);
-			comboNumberDisplay.textContent = comboNumber[j];
-			comboScoreDisplay.textContent = comboScore[j];
-			animate();
-			break;
-		}
-	}
-}
-
-
-let checkNewHighscore = function(score) {
-
-	topFive.push(score);
-
-	topFive.sort(function(value1, value2) {
-		if (value1 < value2) {
-			return 1;
-		} else {
-			return -1;
-		}
-	});
-
-	topFive.pop();
-
-	window.localStorage.highscores = JSON.stringify(topFive);
-}
-
-
-let adjustFinalTetromino = function() {
-
-	//copy tetromino array
-	let adjustedTetro = currentTetromino.slice(0);
-
-	//move tetromino up one row
-	for (j = 0; j < adjustedTetro.length; j++) {
-		adjustedTetro[j] -= width;
-	}
-
-	//remove squares with a negative index (outside the grid)
-	adjustedTetro = adjustedTetro.filter(function(x){
-		return x > -1 }
-		);
-
-	//check if tetromino can be displayed in the new position and move up one row
-	for (i = 0; i < 3; i++) {
-
-		let isNewPositionTaken = adjustedTetro.some(index => squares[currentPosition + index].classList.contains("taken"));
-
-		if (isNewPositionTaken) {
-
-			for (z = 0; z < adjustedTetro.length; z++) {
-				adjustedTetro[z] -= width;
-			}
-
-			adjustedTetro = adjustedTetro.filter(function(x){
-				return x > -1 }
-				);
-		} else {
-			
-			return adjustedTetro;
-		}
-	}
-}
-
-
-let gameOver = function() {
-
-	//check if final tetromino can be displayed completely
-	let isPositionTaken = currentTetromino.some(index => squares[currentPosition + index].classList.contains("taken"));
-
-	let isFirstRow = currentTetromino.some(index => squares[currentPosition + index + width].classList.contains("taken"));
-
-	
-	if (isPositionTaken || isFirstRow) {
-
-		clearInterval(timer);
-		over = true;
-		startBtn.style.display = "none";
-		document.getElementById("gameover").style.display = "initial";
-		
-		if (score > 0) {
-			checkNewHighscore(score);
-		}
-
-		let topScores = document.getElementsByClassName("highScore");
-
-		for (i = 0; i < topScores.length; i++) {
-			topScores[i].textContent = formatNumber(topFive[i]);
-		}
-
-		document.getElementById("highScoreTable").style.display = "initial";
-	}
-
-
-	if (!isPositionTaken && isFirstRow) {
-		draw();
-	}
-
-	//move up and cut final tetromino if it doesn't fit
-	if (isPositionTaken && isFirstRow) {
-
-		let adjusted = adjustFinalTetromino();
-
-		adjusted.forEach(index => {
-
-			let squareToDraw = squares[currentPosition + index];
-
-			squareToDraw.classList.add("tetromino", "taken");
-			squareToDraw.style.backgroundColor = colors[random];
-		});
-	}
-}
-
-
-
-
-
-
-//------------------------------------------
-
-createBoard();
-createDisplay();
-
-let squares = Array.from(document.querySelectorAll(".grid div"));
-let displaySquares = document.querySelectorAll(".mini-grid div");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let controls = function (event) {
-
-	
 	if (event.keyCode === 37) {
 		event.preventDefault();
 		moveLeft();
@@ -660,14 +653,7 @@ let controls = function (event) {
 		event.preventDefault();
 		moveDown();
 	}
-
 }
-
-let started = false;
-let resetBtn = document.getElementById("reset");
-
-document.addEventListener('keydown', controls);
-
 
 
 let addButtonControls = function() {
@@ -678,29 +664,18 @@ let addButtonControls = function() {
 	for (var i = 0; i < arrows.length; i++) {
 		arrows[i].addEventListener('click', actions[i]);
 	}
-
-
 }
 
-addButtonControls();
 
-
-
-let audio = document.getElementById("music");
-audio.volume = 0.1;
-let musicBtn = document.getElementById("musicBtn");
-
-
-
-startBtn.addEventListener('click', () => {
+let startPauseGame = function() {
 
 	if (timer) {
 		clearInterval(timer);
 		timer = null;
 		over = true;
-		// startBtn.textContent = "START";
 		startBtnText.textContent = "START";
 		startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+		
 	} else {
 		
 		if (!started) {
@@ -708,11 +683,12 @@ startBtn.addEventListener('click', () => {
 			nextRandom = Math.floor(Math.random() * (tetrominoes.length - 1));
 			displayNextTetromino();
 			started = true;
-			resetBtn.style.display = "initial";
+			resetBtn.style.display = "block";
 			
 			if (musicBtn.classList.contains("stopped")) {
 				musicBtn.classList.remove("paused");
 				musicBtn.classList.remove("stopped");
+				audio.volume = 0.1;
 				audio.play();
 			}
 		}
@@ -720,16 +696,14 @@ startBtn.addEventListener('click', () => {
 		over = false;
 		draw();
 		timer = setInterval(moveDown, interval);
-		// startBtn.textContent = "PAUSE";
 		startBtnText.textContent = "PAUSE";
 		startBtnIcon.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
 
 	}
-});
+}
 
 
-
-resetBtn.addEventListener("click", function() {
+let reset = function() {
 
 	clearInterval(timer);
 	timer = null;
@@ -738,10 +712,9 @@ resetBtn.addEventListener("click", function() {
 	document.getElementById("level").textContent = "1";
 	started = false;
 	over = true;
-	// startBtn.textContent = "START";
 	startBtnText.textContent = "START";
 	startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
-	startBtn.style.display = "initial";
+	startBtn.style.display = "block";
 	resetBtn.style.display = "none";
 	document.getElementById("gameover").style.display = "none";
 	random = Math.floor(Math.random()*(tetrominoes.length - 1));
@@ -762,10 +735,10 @@ resetBtn.addEventListener("click", function() {
 		square.classList.remove("tetromino");
 		square.style.backgroundColor = "transparent";
 	});
-});
+}
 
 
-musicBtn.addEventListener("click", function() {
+let playPauseMusic = function() {
 
 	if (audio.paused) {
 		audio.play();
@@ -774,13 +747,12 @@ musicBtn.addEventListener("click", function() {
 		audio.pause();
 		musicBtn.classList.add("paused");
 	}
-});
+}
 
-let songs = ["./music/bensound-endlessmotion.mp3", "./music/bensound-dreams.mp3", "./music/bensound-perception.mp3", "./music/bensound-summer.mp3", "./music/bensound-goinghigher.mp3"];
 
-let songPlaying = 0;
+let changeSong = function() {
 
-audio.addEventListener('ended', function() {
+	let songs = ["./music/bensound-endlessmotion.mp3", "./music/bensound-dreams.mp3", "./music/bensound-perception.mp3", "./music/bensound-summer.mp3", "./music/bensound-goinghigher.mp3"];
 	
 	songPlaying++;
 
@@ -793,34 +765,24 @@ audio.addEventListener('ended', function() {
 	audio.pause();
 	audio.load();
 	audio.play();
-});
-
-
-
-
-let getHighscores = function() {
-
-	if (window.localStorage.highscores) {
-
-		topFive = JSON.parse(window.localStorage.getItem("highscores"));
-
-	} else {
-		window.localStorage.setItem("highscores", JSON.stringify(topFive));
-	}
-
 }
 
 
+//-----CREATE GRIDS-----//
+
+createBoard();
+createDisplay();
+
+let squares = Array.from(document.querySelectorAll(".grid div"));
+let displaySquares = document.querySelectorAll(".mini-grid div");
 
 
+//-----HANDLERS-----//
 
-
-
-
+addButtonControls();
 window.addEventListener("load", getHighscores);
-
-
-
-
-
-
+document.addEventListener('keydown', controls);
+startBtn.addEventListener('click', startPauseGame);
+resetBtn.addEventListener('click', reset);
+musicBtn.addEventListener("click", playPauseMusic);
+audio.addEventListener('ended', changeSong);
