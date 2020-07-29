@@ -19,8 +19,6 @@ and (pointer: coarse) {
 @media only screen
 and (max-width: 1024px) {
 
-	/*fix font size*/
-
 	h1 {
 		margin-top: 20px;
 		margin-bottom: 30px;
@@ -97,13 +95,6 @@ and (max-width: 1024px) {
 		min-width: 200px;
 	}
 
-	footer {
-		/*position: absolute;
-		top: calc(100vh - 100px);
-		left: calc(100% - 270px);
-		z-index: -1;*/
-	}
-
 }
 
 
@@ -136,65 +127,32 @@ and (max-width: 999px) {
 @media only screen
 and (max-width: 920px) {
 
-	/*h1 {
-		font-size: 34px;
+
+	#musicBtn {
+		width: 30px;
+		height: 30px;
+		font-size: 16px;
+		top: 12px;
+		left: calc(100% - 42px);
 	}
 
-	h2 {
-		font-size: 22px;
-		text-align: center;
-		white-space: normal;
+	.columnC {
+		padding: 0 5px 0 5px;
 	}
 
-	h3 {
-		margin-top: 25px;
-		}*/
+	div.firstC {
+		padding-top: 55px;
+		min-width: 73px;
+		padding-right: 5px;
 
+	}
 
-		#musicBtn {
-			width: 30px;
-			height: 30px;
-			font-size: 16px;
-			top: 12px;
-			left: calc(100% - 42px);
-		}
-
-		.columnC {
-			padding: 0 5px 0 5px;
-		}
-
-		div.firstC {
-			padding-top: 55px;
-			min-width: 73px;
-			padding-right: 5px;
-			/*max-width: 165px;*/
-		}
-
-		.start {
-		/*min-width: 50px;
-		height: 50px;
-		font-size: 18px;*/
+	.start {
 		margin-bottom: 20px;
 	}
 
-	#reset {
-		/*height: 30px;
-		min-width: 30px;
-		max-width: 30px;
-		font-size: 16px;
-		line-height: 16px;*/
-	}
-
 	#highScoreTable h3 {
-		/*font-size: 15px;*/
 		text-align: center;
-	}
-
-	ol {
-		/*width: 54px;
-		padding-left: 30px;
-		margin-right: 5px;
-		font-size: 12px;*/
 	}
 
 	.gridCont {
@@ -222,7 +180,6 @@ and (max-width: 920px) {
 	div.upNext {
 		min-width: 73px;
 		padding-left: 2px;
-		/*max-width: 165px;*/
 	}
 
 	.upNext h3:nth-child(3) {
@@ -274,15 +231,13 @@ and (max-width: 920px) {
 		left: 6%;
 		width: 40px;
 	}
-	
+
 	#up-down button:first-child {
 		margin-bottom: 10px;
 	}
 
 	footer {
 		font-size: 10px;
-		/*top: calc(100vh - 86px);
-		left: calc(100% - 204px);*/
 	}
 
 }
@@ -307,11 +262,6 @@ and (max-width: 890px) {
 	}
 
 	ol {
-		/*margin-left: 0px;*/
-		/*width: 54px;
-		padding-left: 30px;
-		margin-right: 5px;
-		font-size: 12px;*/
 		font-size: 23px;
 	}
 
@@ -417,7 +367,7 @@ and (max-width: 564px) {
 		min-width: 50px;
 		height: 50px;
 		font-size: 18px;
-		
+
 	}
 
 	#reset {
@@ -466,6 +416,5 @@ and (max-width: 400px) {
 
 	ol {
 		font-size: 16px;
-		/*padding-left: 20px;*/
 	}
 }
