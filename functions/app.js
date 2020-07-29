@@ -440,7 +440,7 @@ let freeze = function() {
 	random = nextRandom;
 
 	//set bomb as next tetromino each level change from level 6 onwards
-	if (playedTetrominoes > 8 && (playedTetrominoes + 1) % 10 === 0) {
+	if (playedTetrominoes > 48 && (playedTetrominoes + 1) % 10 === 0) {
 		nextRandom = 7;
 	} else {
 		nextRandom = Math.floor(Math.random() * (tetrominoes.length - 1));
