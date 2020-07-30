@@ -64,14 +64,20 @@ h5 {
 	position: absolute;
 }
 
-#musicBtn:hover, #musicBtn.paused:hover {
+#musicBtn.paused {
+	color: #d7dade;
+}
+
+#musicBtn:hover {
 	background-color: rgba(0, 0, 0, 0.5);
 	color: #FFFFFF;
 }
 
-#musicBtn.paused {
-	color: #d7dade;
+#musicBtn:active {
+	background-color: rgba(0, 0, 0, 0.3);
+	/*color: #FFFFFF;*/
 }
+
 
 
 
