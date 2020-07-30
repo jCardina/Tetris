@@ -10,7 +10,19 @@ and (pointer: coarse) {
 		color: #FFFFFF;
 	}
 
-	/*add buttons hover none / HD screens / landscape mobile orientation*/
+	#musicBtn:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.start:hover {
+		background-color: rgba(174, 238, 222, 0.7);
+	}
+
+	#reset:hover {
+		background-color: rgba(128, 135, 226, 0.7);
+	}
+
+	/*add HD screens / landscape mobile orientation*/
 
 
 }
