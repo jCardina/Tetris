@@ -64,7 +64,7 @@ h5 {
 	position: absolute;
 }
 
-#musicBtn:hover {
+#musicBtn:hover, #musicBtn.paused:hover {
 	background-color: rgba(0, 0, 0, 0.5);
 	color: #FFFFFF;
 }
@@ -330,9 +330,12 @@ li {
 
 .orientationNotice {
 	display: none;
-	font-size: 34px;
-	padding-top: 30px;
+	padding-top: 50px;
 	text-align: center;
+}
+
+.orientationNotice h2 {
+	font-size: 30px;
 }
 
 footer {

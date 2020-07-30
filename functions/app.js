@@ -21,6 +21,7 @@ const startBtnText = document.getElementById("startText");
 const resetBtn = document.getElementById("reset");
 const audio = document.getElementById("music");
 const musicBtn = document.getElementById("musicBtn");
+const mediaQuery = window.matchMedia("(max-height: 900px) and (orientation: landscape) and (hover: none) and (pointer: coarse)");
 
 const width = 10;
 const colors = [
@@ -768,6 +769,20 @@ let changeSong = function() {
 }
 
 
+let pauseMobileInLandscape = function(query) {
+	//pause game in landscape orientation for small devices that can't display the full game
+
+  if (query.matches && timer) {
+  		clearInterval(timer);
+  		timer = null;
+  		over = true;
+  		startBtnText.textContent = "START";
+  		startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+  }
+}
+
+
+
 //-----CREATE GRIDS-----//
 
 createBoard();
@@ -780,25 +795,10 @@ let displaySquares = document.querySelectorAll(".mini-grid div");
 //-----HANDLERS-----//
 
 addButtonControls();
+mediaQuery.addListener(pauseMobileInLandscape);
 window.addEventListener("load", getHighscores);
 document.addEventListener('keydown', controls);
 startBtn.addEventListener('click', startPauseGame);
 resetBtn.addEventListener('click', reset);
 musicBtn.addEventListener("click", playPauseMusic);
 audio.addEventListener('ended', changeSong);
-
-
-let pauseMobileLandscape = function(query) {
-	
-  if (query.matches && timer) {
-  		clearInterval(timer);
-  		timer = null;
-  		over = true;
-  		startBtnText.textContent = "START";
-  		startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
-  }
-}
-
-const mediaQuery = window.matchMedia("(max-height: 900px) and (orientation: landscape) and (hover: none) and (pointer: coarse)");
-pauseMobileLandscape(mediaQuery); // Call listener function at run time
-mediaQuery.addListener(pauseMobileLandscape); // Attach listener function on state changes
