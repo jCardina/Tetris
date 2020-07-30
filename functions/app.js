@@ -786,3 +786,19 @@ startBtn.addEventListener('click', startPauseGame);
 resetBtn.addEventListener('click', reset);
 musicBtn.addEventListener("click", playPauseMusic);
 audio.addEventListener('ended', changeSong);
+
+
+let pauseMobileLandscape = function(query) {
+	
+  if (query.matches && timer) {
+  		clearInterval(timer);
+  		timer = null;
+  		over = true;
+  		startBtnText.textContent = "START";
+  		startBtnIcon.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+  }
+}
+
+const mediaQuery = window.matchMedia("(max-height: 900px) and (orientation: landscape) and (hover: none) and (pointer: coarse)");
+pauseMobileLandscape(mediaQuery); // Call listener function at run time
+mediaQuery.addListener(pauseMobileLandscape); // Attach listener function on state changes

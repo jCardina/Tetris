@@ -12,18 +12,44 @@ and (pointer: coarse) {
 
 	#musicBtn:hover {
 		background-color: rgba(0, 0, 0, 0.1);
+		color: #000000;
+	}
+
+	#musicBtn:active {
+		background-color: rgba(0, 0, 0, 0.5);
+		color: #FFFFFF;
 	}
 
 	.start:hover {
 		background-color: rgba(174, 238, 222, 0.7);
 	}
 
+	.start:active {
+		background-color: rgba(81, 146, 226, 0.6);
+	}
+
 	#reset:hover {
 		background-color: rgba(128, 135, 226, 0.7);
 	}
 
-	/*add HD screens / landscape mobile orientation*/
+	#reset:active {
+		background-color: rgba(247, 124, 124, 0.7);
+	}
+}
 
+@media only screen
+and (max-height: 900px)
+and (orientation: landscape)
+and (hover: none)
+and (pointer: coarse) {
+
+	.columnC, .controlsCont, footer {
+		display: none;
+	}
+
+	.orientationNotice, .orientationNotice h2 {
+		display: block;
+	}
 
 }
 

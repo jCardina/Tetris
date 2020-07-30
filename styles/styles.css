@@ -328,6 +328,13 @@ li {
 
 /*----------*/
 
+.orientationNotice {
+	display: none;
+	font-size: 34px;
+	padding-top: 30px;
+	text-align: center;
+}
+
 footer {
 	font-size: 12px;
 	text-align: right;
