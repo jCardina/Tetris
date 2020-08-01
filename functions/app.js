@@ -438,6 +438,7 @@ let freeze = function() {
 		exploded = true;
 	}
 
+	addScore(grid);
 	random = nextRandom;
 
 	//set bomb as next tetromino each level change from level 6 onwards
@@ -452,7 +453,6 @@ let freeze = function() {
 
 	displayNextTetromino();
 
-	addScore(grid);
 	currentPosition = 4;
 
 	gameOver();
